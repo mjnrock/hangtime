@@ -1,18 +1,6 @@
 import { v4 as uuid } from "uuid";
 
-import Signal from "./Signal";
-
 export class Agent {
-	static DefaultReducer = (signal) => {	// Handler is here as a reference in case it needs to be removed as a handler and will be bound to the Node in the constructor
-		if(signal.meta.isCoerced) {
-			// (Implicit data) Functionally, this occurs when a Signal was created ad hoc, and the original @args were condensed into an array and assigned to .data, thus unpackage
-			return signal.data[ 0 ];
-		}
-		
-			// (Explicit data) A Signal was explicitly created, so use w/e data was present in the Signal
-		return signal.data;
-	}
-
 	constructor({ state = {}, triggers = [], config, namespace, id } = {}) {
 		this.id = id || uuid();
 
@@ -20,7 +8,7 @@ export class Agent {
 		this.triggers = new Map(triggers);
 
 		this.config = {
-			isReducer: true,	// Make ALL triggers return a state -- to exclude a trigger from state, create a * handler that returns true on those triggers
+			isReducer: false,	// Make ALL triggers return a state -- to exclude a trigger from state, create a * handler that returns true on those triggers
 			allowRPC: true,		// If no trigger handlers exist AND an internal method is named equal to the trigger, pass ...args to that method
 
 			queue: new Set(),
@@ -29,6 +17,9 @@ export class Agent {
 
 			//TODO There's a lot of nuance here that needs to be worked out, but key here added as a future addition
 			namespace: typeof namespace === "function" ? namespace : trigger => trigger,
+
+			//? These will be added to all @payloads
+			globals: {},
 
 			...config,
 		};
@@ -97,21 +88,47 @@ export class Agent {
 
 
 	/**
+	 * 
+	 */
+	__generatePayload({ trigger, args } = {}) {
+		return [
+			args,
+			{
+				trigger: trigger,
+				target: this,
+				state: this.state,
+				invoke: this.invoke,
+				
+				...this.config.globals,
+			}
+		];
+	}
+
+	/**
 	 * This should NOT be used externally.
 	 * 
 	 * A handling abstract to more easily deal with
 	 * batching vs immediate invocations
 	 */
-	__handleInvocation(signal) {
+	__handleInvocation(trigger, ...args) {
+		if(typeof trigger === "string" && trigger[ 0 ] === "$") {
+			return false;
+		}
+
 		// Many contingent handlers receive the same payload, so abstract it here
-		const payload = [ signal, {
-			trigger: signal.type,
-			target: this,
-			state: this._state,
-			globalState: this.state,
-			broadcast: this.broadcast,
-			invoke: this.invoke,
-		} ];
+		const payload = this.__generatePayload({ trigger, args });
+
+		const handlers = this.triggers.get(trigger);
+		if(!handlers.length) {
+			// Verify that the RPC has a landing method
+			if(this.config.allowRPC === true && typeof trigger === "string" && typeof this[ trigger ] === "function") {
+				this[ trigger ](...args);
+
+				return true;
+			}
+
+			return false;
+		}
 
 		/**
 		 * ? Pre hooks
@@ -125,53 +142,21 @@ export class Agent {
 			}
 		}
 
-		let hadMatch = false;
-		for(let [ trigger, handlers ] of this.triggers) {
-			if(signal.type === trigger) {
-				hadMatch = true;
-				/**
-				 * "state" handlers won't reduce, but could theoretically use
-				 * this._state directly, if needed
-				 */
-				if(this.config.isReducer === true && signal.type !== "update") {
-					let next;
-					// Execute all handlers before continuing
-
-					if(handlers.size === 0) {
-						next = Agent.DefaultReducer(...payload);
-					} else {
-						for(let handler of handlers) {
-							next = handler(...payload);
-						}
-					}
-
-					const oldState = this.state;
-					this.state = next;
-
-					this.invoke("update", { current: next, previous: oldState });
-				} else {
-					// Execute all handlers before continuing
-					for(let handler of handlers) {
-						handler(...payload);
-					}
-				}
+		if(this.config.isReducer === true) {
+			let next;
+			for(let handler of handlers) {
+				next = handler(...payload);
 			}
-		}
-
-		// Only execute below if a trigger handler did not exist AND Node is configured to accept RPC
-		//? Note, there are limitations to this usage paradigm, so explicitly define a custom RPC handler to handle such cases (e.g. .update vis-a-vis "update")
-		if(hadMatch === false && this.config.allowRPC === true) {
-			// Verify that the RPC has a landing method
-			if(typeof signal.type === "string" && typeof this[ signal.type ] === "function") {
-				//!	If the .data is an Array, expand it -- you may need to array-wrap the data payload depending on how .invoke was called (cf .invoke @args)
-				// * As a general rule, explicitly create a Signal when performing RPC
-				if(Array.isArray(signal.data)) {
-					this[ signal.type ](...signal.data);
-				} else {
-					this[ signal.type ](signal.data);
-				}
-
-				hadMatch = true;
+	
+			const oldState = this.state;
+			this.state = next;
+	
+			if(Object.keys(this.state).length && oldState !== this.state) {
+				this.invoke("$update", { current: next, previous: oldState });
+			}
+		} else {			
+			for(let handler of handlers) {
+				handler(...payload);
 			}
 		}
 
@@ -180,7 +165,7 @@ export class Agent {
 		 * Treat these like Effects
 		 */
 		for(let fn of (this.triggers.get("$post") || [])) {
-			fn(...payload);
+			fn(hadMatch, ...payload);
 		}
 
 		return hadMatch;
