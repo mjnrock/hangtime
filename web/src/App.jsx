@@ -1,5 +1,15 @@
-function App() {
-	return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+import { Routes as Router, Route } from "react-router-dom";
+
+import Routes from "./routes/package";
+
+export function App() {
+	return (
+		<Router>
+			<Route path="/" element={<Routes.Header />}>
+				<Route index element={<Routes.Default />} />
+			</Route>
+		</Router>
+	);
 }
 
 export default App;
