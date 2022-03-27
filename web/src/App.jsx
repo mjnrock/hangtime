@@ -18,4 +18,6 @@ export function App() {
 	);
 }
 
+// fetch("https://nominatim.openstreetmap.org/search/opa%2C+48362?format=json").then(results => results.json()).then(json => console.log(json))
+
 export default App;
