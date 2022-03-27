@@ -1,8 +1,7 @@
-import Header from "./Header";
+import DefaultLayout from "./DefaultLayout";
 import Default from "./Default";
 
 export default {
-    Header,
-	
+    DefaultLayout,
     Default,
 };

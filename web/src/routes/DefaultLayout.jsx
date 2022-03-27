@@ -1,6 +1,6 @@
 import { Outlet, Link } from "react-router-dom";
 
-export function Header() {
+export function DefaultLayout() {
 	return (
 		<div>
 			{/* <div className="text-2xl">Header</div>
@@ -19,4 +19,4 @@ export function Header() {
 	);
 }
 
-export default Header;
+export default DefaultLayout;
