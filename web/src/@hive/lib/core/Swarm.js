@@ -1,6 +1,6 @@
-import HiveBase from "./HiveBase";
+import Agent from "./Agent";
 
-export class Swarm extends HiveBase {
+export class Swarm extends Agent {
 	constructor({ id } = {}) {
 		super({ id });
 	}

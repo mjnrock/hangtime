@@ -1,4 +1,4 @@
-import HiveBase from "./HiveBase";
+import Agent from "./Agent";
 import Node from "./Node";
 
 export const frozenKeys = [
@@ -14,7 +14,7 @@ export const frozenKeys = [
 	`isClone`,
 ];
 
-export class Signal extends HiveBase {
+export class Signal extends Agent {
 	constructor({ type, data, emitter, destination, tags = [], meta = {}, parent } = {}, { override = false, coerced = false, timestamp, id } = {}) {
 		super({ id, tags, parent });
 		
