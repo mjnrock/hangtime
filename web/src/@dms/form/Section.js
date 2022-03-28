@@ -7,6 +7,16 @@ export class Section extends FormBase {
 		
 		this.fields = fields;
 	}
+
+	getFieldById(id) {
+		let [ field ] = this.fields.filter(field => field.id === id);
+
+		if(field) {
+			return field;
+		}
+
+		return false;
+	}
 };
 
 export default Section;

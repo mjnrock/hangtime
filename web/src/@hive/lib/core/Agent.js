@@ -1,6 +1,8 @@
 import { v4 as uuid } from "uuid";
 
 export class Agent {
+	static NotifyTrigger = "@update";
+	
 	constructor({ state = {}, triggers = [], config, namespace, id } = {}) {
 		this.id = id || uuid();
 
@@ -62,8 +64,16 @@ export class Agent {
 		return this;
 	}
 	addTriggers(addTriggerArgs = []) {
-		for(let args of addTriggerArgs) {
-			this.addTrigger(...args);
+		if(typeof addTriggerArgs === "object") {
+			if(Array.isArray(addTriggerArgs)) {
+				for(let args of addTriggerArgs) {
+					this.addTrigger(...args);
+				}
+			} else {
+				for(let [ key, fn ] of Object.entries(addTriggerArgs)) {
+					this.addTrigger(key, fn);
+				}
+			}
 		}
 
 		return this;
@@ -84,6 +94,10 @@ export class Agent {
 		}
 
 		return results;
+	}
+
+	hasTrigger(trigger) {
+		return this.triggers.has(trigger);
 	}
 
 
@@ -152,7 +166,7 @@ export class Agent {
 			this.state = next;
 	
 			if(Object.keys(this.state).length && oldState !== this.state) {
-				this.invoke("$update", { current: next, previous: oldState });
+				this.invoke(Agent.NotifyTrigger, { current: next, previous: oldState });
 			}
 		} else {			
 			for(let handler of handlers) {

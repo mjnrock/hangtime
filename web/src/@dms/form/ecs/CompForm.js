@@ -1,7 +1,16 @@
 export class CompForm {
+	constructor() {
+		this.forms = new Map();
+	}
 
-	constructor(form) {
-		this.form = form;
+	getFormById(id) {
+		let form = this.forms.get(id);
+
+		if(form) {
+			return form;
+		}
+
+		return false;
 	}
 };
 
