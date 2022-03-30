@@ -8,6 +8,7 @@ export function App() {
 			<Router>
 				<Route path="/" element={<Routes.DefaultLayout />}>
 					<Route index element={<Routes.Default />} />
+					<Route path="map" element={<Routes.Map />} />
 				</Route>
 			</Router>
 		</>
