@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#MapRoot.leaflet-container {
+	position: absolute;
+}
