@@ -69,8 +69,37 @@ wss.on("connection", client => {
 		uuid: client.uuid,
 	}));
 
-	client.on("message", data => {
-		console.log(`Message received`, JSON.parse(data));
+	client.on("message", input => {
+		try {
+			const data = JSON.parse(input);
+
+			if(data.type === "host") {
+				fs.readFile(`./data/games.json`, "utf8", (err, data) => {
+					const table = JSON.parse(data);
+					const row = {
+						id: uuid(),
+						timestamp: {
+							start: Date.now(),
+							end: Date.now() + 3549,
+						},
+					};
+
+					table.push(row);
+					const json = JSON.stringify(table);
+
+					fs.writeFile(`./data/games.json`, json, (...args) => {
+						console.log(args);
+					});
+				});
+			} else if(data.type === "find") {
+				fs.readFile(`./data/games.json`, "utf8", (err, data) => {
+					client.send(JSON.stringify({
+						type: "games",
+						data: JSON.parse(data),
+					}));
+				});
+			}
+		} catch(e) {}
 	});
 	// client.onmessage = (msg) => {
 	// 	console.log(msg.data);
