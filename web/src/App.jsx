@@ -6,9 +6,12 @@ export function App() {
 	return (
 		<>
 			<Router>
-				<Route path="/" element={<Routes.DefaultLayout />}>
-					<Route index element={<Routes.Default />} />
-					<Route path="map" element={<Routes.Map />} />
+				<Route path="/" element={ <Routes.DefaultLayout /> }>
+					<Route index element={ <Routes.Default /> } />
+					<Route path="test" element={ <Routes.Test /> } />
+					
+					<Route path="find" element={ <Routes.Find /> } />
+					<Route path="host" element={ <Routes.Host /> } />
 				</Route>
 			</Router>
 		</>

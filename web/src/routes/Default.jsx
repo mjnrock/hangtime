@@ -5,7 +5,10 @@ export function Default() {
 	return (
 		<>
 			<div>Home page</div>
-			<Link to={ "/map" }>Map</Link>
+			<Link to={ "/test" }>Test</Link>
+
+			<Link to={ "/find" }>Find</Link>
+			<Link to={ "/host" }>Host</Link>
 		</>
 	);
 }

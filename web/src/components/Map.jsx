@@ -1,10 +1,9 @@
-import React, { useState, useRef, useMemo, useCallback } from "react";
+import React, { useState, useRef, useMemo, useCallback, Children } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import FindGame from "../components/FindGame";
 
 function DraggableMarker({ center } = {}) {
-	const [draggable, setDraggable] = useState(false);
-	const [position, setPosition] = useState(center);
+	const [ draggable, setDraggable ] = useState(false);
+	const [ position, setPosition ] = useState(center);
 	const markerRef = useRef(null);
 	const eventHandlers = useMemo(
 		() => ({
@@ -23,28 +22,28 @@ function DraggableMarker({ center } = {}) {
 
 	return (
 		<Marker
-			draggable={draggable}
-			eventHandlers={eventHandlers}
-			position={position}
-			ref={markerRef}
+			draggable={ draggable }
+			eventHandlers={ eventHandlers }
+			position={ position }
+			ref={ markerRef }
 		>
-			<Popup minWidth={90}>
-				<span onClick={toggleDraggable}>
-					{draggable
+			<Popup minWidth={ 90 }>
+				<span onClick={ toggleDraggable }>
+					{ draggable
 						? "Marker is draggable"
-						: "Click here to make marker draggable"}
+						: "Click here to make marker draggable" }
 				</span>
 			</Popup>
 		</Marker>
 	);
 }
 
-export function Default() {
-	const [position, setPosition] = useState([]);
+export function Map({ children } = {}) {
+	const [ position, setPosition ] = useState([]);
 
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(({ coords } = {}) => {
-			setPosition([coords.latitude, coords.longitude]);
+			setPosition([ coords.latitude, coords.longitude ]);
 		});
 	}
 
@@ -55,23 +54,22 @@ export function Default() {
 	return (
 		<div id="MapRoot">
 			<MapContainer
-				center={position}
-				zoom={15}
-				scrollWheelZoom={true}
-				preferCanvas={true}
-				style={{
+				center={ position }
+				zoom={ 15 }
+				scrollWheelZoom={ true }
+				preferCanvas={ true }
+				style={ {
 					height: 500,//window.innerHeight,
 					width: 500,//window.innerWidth,
 					left: 0,
 					top: 0,
-				}}
+				} }
 			>
-				<h1>jaslkfjklsdjafiwejroi jlkjsda lkfjasdl kf</h1>
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
-				<DraggableMarker center={position} />
+				<DraggableMarker center={ position } />
 				{/* <Marker position={position}>
 					<Popup>
 						A pretty CSS3 popup. <br /> Easily customizable.
@@ -79,9 +77,9 @@ export function Default() {
 				</Marker> */}
 			</MapContainer>
 
-			<FindGame />
+			{ children }
 		</div>
 	);
 }
 
-export default Default;
+export default Map;
