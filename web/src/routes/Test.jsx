@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { DateTime, Interval } from "luxon";
 
 function Game({ detail }) {
 	return (
@@ -12,12 +13,17 @@ function Game({ detail }) {
 			<div className="mt-5 flex flex-row">
 				<div>
 					Start
-					<div>{ detail.timestamp.start }</div>
+					<div>{ DateTime.fromSeconds(detail.timestamp.start).toFormat(`ff`) }</div>
 				</div>
 				&nbsp;
 				<div>
 					End
-					<div>{ detail.timestamp.end }</div>
+					<div>{ DateTime.fromSeconds(detail.timestamp.end).toFormat(`ff`) }</div>
+				</div>
+				&nbsp;
+				<div className="font-bold">
+					Duration
+					<div>{ ~~Interval.fromDateTimes(DateTime.fromSeconds(detail.timestamp.start), DateTime.fromSeconds(detail.timestamp.end)).length(`minutes`) } min</div>
 				</div>
 			</div>
 		</div>

@@ -2,7 +2,9 @@ import fs from "fs";
 import express from "express";
 import https from "https";
 import { WebSocketServer } from "ws";
+
 import { v4 as uuid } from "uuid";
+import { DateTime } from "luxon";
 
 const config = {
 	port: 3001,
@@ -79,8 +81,8 @@ wss.on("connection", client => {
 					const row = {
 						id: uuid(),
 						timestamp: {
-							start: Date.now(),
-							end: Date.now() + 3549,
+							start: DateTime.now().toSeconds(),
+							end: DateTime.now().plus({ hours: 2, minutes: 30 }).toSeconds(),
 						},
 					};
 
