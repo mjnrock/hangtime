@@ -3,12 +3,22 @@ import React, { useState, useEffect } from "react";
 function Game({ detail }) {
 	return (
 		<div className="border rounded p-5 mt-5 mx-5 hover:bg-gray-700 hover:text-white hover:bg-opacity-50">
-			<div className="grid grid-flow-row auto-rows-max">				
-				<div>{ detail.id }</div>
+			<div className="grid grid-flow-row auto-rows-max">
+				<div>
+					Game Id
+					<div>{ detail.id }</div>
+				</div>
 			</div>
-			<div className="mt-5 grid grid-flow-row auto-rows-max">
-				<div>{ detail.timestamp.start }</div>
-				<div>{ detail.timestamp.end }</div>
+			<div className="mt-5 flex flex-row">
+				<div>
+					Start
+					<div>{ detail.timestamp.start }</div>
+				</div>
+				&nbsp;
+				<div>
+					End
+					<div>{ detail.timestamp.end }</div>
+				</div>
 			</div>
 		</div>
 	);
@@ -20,16 +30,16 @@ export function Host() {
 
 	useEffect(() => {
 		const ws = new WebSocket(`wss://kiszka.com:3001`);
-		ws.addEventListener("open", function open() {
-			console.log(823749823);
-			ws.send(JSON.stringify({
-				cats: 15
-			}));
+		ws.addEventListener("open", () => {
+			// console.log(823749823);
+			// ws.send(JSON.stringify({
+			// 	cats: 15
+			// }));
 		});
 		
-		ws.addEventListener("message", function message(input) {
+		ws.addEventListener("message", (payload) => {
 			try {
-				const msg = JSON.parse(input.data);
+				const msg = JSON.parse(payload.data);
 
 				if(msg.type === "games") {
 					setGames(msg.data);
