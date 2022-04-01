@@ -1,13 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Map from "../components/Map";
 import FindGame from "../components/FindGame";
 
-export function Host() {
+export function Find() {
+	const [ ws, setWs ] = useState();
+	const [ games, setGames ] = useState([]);
+
+	useEffect(() => {
+		const ws = new WebSocket(`wss://kiszka.com:3001`);
+		ws.addEventListener("open", () => {
+			ws.send(JSON.stringify({
+				type: "find",
+			}));
+		});
+		
+		ws.addEventListener("message", (payload) => {
+			try {
+				const msg = JSON.parse(payload.data);
+
+				if(msg.type === "games") {
+					setGames(msg.data);
+				}
+			} catch(e) {}
+		});
+
+		setWs(ws);
+
+		return () => {
+			ws.close();
+		};
+	}, []);
+
 	return (
 		<Map>
-			<FindGame />
+			<FindGame games={ games } />
 		</Map>
 	);
 }
 
-export default Host;
+export default Find;

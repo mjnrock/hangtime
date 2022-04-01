@@ -71,6 +71,10 @@ wss.on("connection", client => {
 		uuid: client.uuid,
 	}));
 
+	client.on("close", input => {
+		console.log("Client disconnected");
+	})
+
 	client.on("message", input => {
 		try {
 			const data = JSON.parse(input);

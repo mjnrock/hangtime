@@ -1,4 +1,16 @@
-export function HostGame() {
+import GameCard from "./GameCard";
+
+export function FindGame({ games }) {
+	if(Array.isArray(games)) {
+		return (
+			<div className="absolute left-0 top-0 w-[500px] h=[500px] p-[5rem] pt-2">
+				{
+					games.map(game => <GameCard detail={ game } key={ game.id } />)
+				}
+			</div>
+		);
+	}
+
 	return (
 		<div className="absolute left-0 top-0 w-[500px] h=[500px] p-[5rem] pt-2">
 			<div className="grid grid-flow-row auto-rows-max">
@@ -28,4 +40,4 @@ export function HostGame() {
 	);
 };
 
-export default HostGame;
+export default FindGame;
