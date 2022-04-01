@@ -2,6 +2,7 @@ import fs from "fs";
 import express from "express";
 import https from "https";
 import { WebSocketServer } from "ws";
+import { v4 as uuid } from "uuid";
 
 const config = {
 	port: 3001,
@@ -61,14 +62,20 @@ const server = https.createServer({ key, cert }, app);
 
 const wss = new WebSocketServer({ server });
 wss.on("connection", client => {
-	console.log("Client connected.");
+	console.log("Client connected");
 
+	client.uuid = uuid();
 	client.send(JSON.stringify({
-		meows: true,
+		uuid: client.uuid,
 	}));
-});
-wss.on("message", msg => {
-	console.log("Client said: " + msg.toString());
+
+	client.on("message", data => {
+		console.log(`Message received`, JSON.parse(data));
+	});
+	// client.onmessage = (msg) => {
+	// 	console.log(msg.data);
+	// 	// console.log(`Message received`, JSON.parse(msg));
+	// };
 });
 
 server.listen(config.port, err => {
