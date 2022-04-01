@@ -80,22 +80,14 @@ wss.on("connection", client => {
 			const data = JSON.parse(input);
 
 			if(data.type === "host") {
-				fs.readFile(`./data/games.json`, "utf8", (err, data) => {
-					const table = JSON.parse(data);
-					const row = {
-						id: uuid(),
-						timestamp: {
-							start: DateTime.now().toMillis(),
-							end: DateTime.now().plus({ hours: 2, minutes: 30 }).toMillis(),
-						},
-					};
+				console.log(data)
+				fs.readFile(`./data/games.json`, "utf8", (err, fileContents) => {
+					const table = JSON.parse(fileContents);
 
-					table.push(row);
+					table.push(data.payload);
 					const json = JSON.stringify(table);
 
-					fs.writeFile(`./data/games.json`, json, (...args) => {
-						console.log(args);
-					});
+					fs.writeFile(`./data/games.json`, json, () => {});
 				});
 			} else if(data.type === "find") {
 				fs.readFile(`./data/games.json`, "utf8", (err, data) => {

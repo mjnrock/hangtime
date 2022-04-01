@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import dateFormat from "dateformat";
+
 import GameCard from "../components/GameCard";
 
 export function Test() {
@@ -38,9 +40,14 @@ export function Test() {
 		}));
 	}
 
+
+	const [ datetime, setDatetime ] = useState(Date.now());
+
 	return (
 		<div>
 			Tests
+
+			<input type="datetime-local" value={ dateFormat(datetime, "yyyy-mm-dd'T'HH:MM:ss") } onChange={ e => setDatetime(new Date(e.target.value)) } />
 
 			<button onClick={ e => hostGame() }>Host</button>
 			<button onClick={ e => findGame() }>Find</button>
