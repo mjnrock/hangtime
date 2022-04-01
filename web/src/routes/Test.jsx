@@ -13,17 +13,17 @@ function Game({ detail }) {
 			<div className="mt-5 flex flex-row">
 				<div>
 					Start
-					<div>{ DateTime.fromSeconds(detail.timestamp.start).toFormat(`ff`) }</div>
+					<div>{ DateTime.fromMillis(detail.timestamp.start).toFormat(`ff`) }</div>
 				</div>
 				&nbsp;
 				<div>
 					End
-					<div>{ DateTime.fromSeconds(detail.timestamp.end).toFormat(`ff`) }</div>
+					<div>{ DateTime.fromMillis(detail.timestamp.end).toFormat(`ff`) }</div>
 				</div>
 				&nbsp;
 				<div className="font-bold">
 					Duration
-					<div>{ ~~Interval.fromDateTimes(DateTime.fromSeconds(detail.timestamp.start), DateTime.fromSeconds(detail.timestamp.end)).length(`minutes`) } min</div>
+					<div>{ ~~Interval.fromDateTimes(DateTime.fromMillis(detail.timestamp.start), DateTime.fromMillis(detail.timestamp.end)).length(`minutes`) } min</div>
 				</div>
 			</div>
 		</div>

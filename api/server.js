@@ -81,8 +81,8 @@ wss.on("connection", client => {
 					const row = {
 						id: uuid(),
 						timestamp: {
-							start: DateTime.now().toSeconds(),
-							end: DateTime.now().plus({ hours: 2, minutes: 30 }).toSeconds(),
+							start: DateTime.now().toMillis(),
+							end: DateTime.now().plus({ hours: 2, minutes: 30 }).toMillis(),
 						},
 					};
 
