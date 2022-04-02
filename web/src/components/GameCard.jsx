@@ -3,7 +3,7 @@ import dateFormat from "dateformat";
 
 export function GameCard({ onSelect, game }) {
 	return (
-		<div className="border rounded p-5 mt-5 mx-5 hover:bg-gray-700 hover:text-white hover:bg-opacity-50 cursor-pointer" onClick={ e => onSelect(e) }>
+		<div className="border rounded p-5 mt-1 mx-1 hover:bg-gray-500 hover:text-white cursor-pointer" onClick={ e => onSelect(e) }>
 			<div className="grid grid-flow-row auto-rows-max">
 				<div className="font-bold">{ game.subject }</div>
 				<div className="italic">{ game.comment }</div>

@@ -72,17 +72,18 @@ export function Find() {
 	//TODO	The game-derived draggable markers needs better way to pass to Map, as the Markers likely need to respond to hover events and contain game information
 	return (
 		<div className="mt-5 flex flex-col h-screen">
-			<div className="w-full">
+			{/* //? Find - Filter */}
+			<div className="w-full text-center">
 				<div className="flex flex-col">
-					<div className="">
-						<input type="text" placeholder="Category" value={ state.filter.category.join("") } className="border rounded m-4 p-2 w-fit" />
-						<input type="text" placeholder="Activity" value={ state.filter.activity.join("") } className="border rounded m-4 p-2 w-fit" />
+					<div className="flex">
+						<input type="text" placeholder="Category" value={ state.filter.category.join("") } className="border rounded m-4 p-2 flex-1" />
+						<input type="text" placeholder="Activity" value={ state.filter.activity.join("") } className="border rounded m-4 p-2 flex-1" />
 					</div>
 					
-					<div className="">
-						<input type="number" placeholder="Radius" value={ state.filter.radius } className="border rounded m-4 p-2 w-fit" />
-						<input type="datetime-local" placeholder="Time Start" value={ dateFormat(state.filter.start, "yyyy-mm-dd'T'HH:MM") } className="border rounded m-4 p-2 w-fit" />
-						<input type="datetime-local" placeholder="Time End" value={ dateFormat(state.filter.end, "yyyy-mm-dd'T'HH:MM") } className="border rounded m-4 p-2 w-fit" />
+					<div className="flex">
+						<input type="number" placeholder="Radius" value={ state.filter.radius } className="border rounded m-4 p-2 flex-1" />
+						<input type="datetime-local" placeholder="Time Start" value={ dateFormat(state.filter.start, "yyyy-mm-dd'T'HH:MM") } className="border rounded m-4 p-2 flex-1" />
+						<input type="datetime-local" placeholder="Time End" value={ dateFormat(state.filter.end, "yyyy-mm-dd'T'HH:MM") } className="border rounded m-4 p-2 flex-1" />
 					</div>
 				</div>
 			</div>
