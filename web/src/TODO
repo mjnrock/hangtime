@@ -1,34 +1,36 @@
 React:
-	Game:
-		☐ Create <Game /> @Component
-			☐ Accept $game prop for details
-			☐ Expose callback props for parent component
-		☐ Invoke <Game /> in #Find on <GameCard.click />
-			☐ Occupy entire <GameList /> via $spotlight prop
-			☐ Semi-transparent black surrounding overlay
-			☐ Click "Return" button to close
-		☐ Create <GameList />
-			☐ Contain and group <GameCards />
-			☐ Create $spotlight prop
-				☐ Hide all <GameCards />
-				☐ Fill with <Game />
+	Host:
+		
 	Find:
-		☐ Web Screen
-			☐ 2 vertical panes
-				☐ Search pane in top
-					☐ Category dropdown
-					☐ Activity dropdown
-					☐ DateTime range picker
-					☐ OnChange call API for updated data
-				☐ Games pane in bottom, 2 pane (60/40) @UI
-					☐ Fill <Map /> to left container size @UI
-					☐ Fill <GameList /> to right container @UI
-		☐ Click <GameCard /> to spotlight that game @UI
-			☐ MoveMap > FlyTo, ZoomTo Marker
-			☐ Change opacity to 100%
-			☐ Change opacity of all other markers to 0%
+		GameCard:
+			☐ Spotlighting graphics
+				☐ Change opacity to 100%
+				☐ Change opacity of all other markers to 0%
 				☐ Unselect <GameCard />, change back to 100%
-		☐ Hover <GameCard /> to dynaically highlight Map Marker
-			☐ Change opacity to 100%
-			☐ Change opacity of all other markers to 40%
-				☐ Unhover <GameCard />, change back to 100%
+			☐ Hovering graphics
+				☐ Change opacity to 100%
+				☐ Change opacity of all other markers to 40%
+					☐ Unhover <GameCard />, change back to 100%
+
+Archive:
+    ✔ MoveMap > FlyTo, ZoomTo Marker @done(22-04-02 14:55) @project(React.Find)
+    ✔ Activity dropdown @done(22-04-02 14:15) @project(React.Find)
+    ✔ DateTime range picker @done(22-04-02 14:15) @project(React.Find)
+    ✔ Create <Game /> @Component @done(22-04-02 14:13) @project(React.Game)
+    ✔ Accept $game prop for details @done(22-04-02 13:32) @project(React.Game)
+    ✔ Occupy entire <GameList /> via $spotlight prop @done(22-04-02 14:13) @project(React.Game)
+    ✔ Click "Return" button to close @done(22-04-02 14:13) @project(React.Game)
+    ✔ Create <GameList /> @done(22-04-02 14:13) @project(React.Game)
+    ✔ Contain and group <GameCards /> @done(22-04-02 14:13) @project(React.Game)
+    ✔ Create $spotlight prop @done(22-04-02 14:13) @project(React.Game)
+    ✔ Hide all <GameCards /> @done(22-04-02 14:13) @project(React.Game)
+    ✔ Fill with <Game /> @done(22-04-02 14:13) @project(React.Game)
+    ✔ 2 vertical panes @done(22-04-02 14:13) @project(React.Find)
+    ✔ Search pane in top @done(22-04-02 14:13) @project(React.Find)
+    ✔ Category dropdown @done(22-04-02 14:15) @project(React.Find)
+    ✔ Games pane in bottom, 2 pane (60/40) @UI @done(22-04-02 14:13) @project(React.Find)
+    ✔ Fill <Map /> to left container size @UI @done(22-04-02 14:13) @project(React.Find)
+    ✔ Fill <GameList /> to right container @UI @done(22-04-02 14:13) @project(React.Find)
+    ✔ Click <GameCard /> to spotlight that game @UI @done(22-04-02 14:13) @project(React.Find)
+    ✔ Expose callback props for parent component @done(22-04-02 13:32) @project(React.Game)
+    ✔ Invoke <Game /> in #Find on <GameCard.click /> @done(22-04-02 14:13) @project(React.Game)

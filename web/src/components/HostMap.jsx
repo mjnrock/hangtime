@@ -62,10 +62,8 @@ export function Map({ onPosition, markers = [], children } = {}) {
 				scrollWheelZoom={ true }
 				preferCanvas={ true }
 				style={ {
-					height: 500,//window.innerHeight,
-					width: 500,//window.innerWidth,
-					left: 0,
-					top: 0,
+					height: 500,
+					width: 500,
 				} }
 			>
 				<TileLayer

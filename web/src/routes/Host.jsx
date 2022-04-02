@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from "react";
-import Map from "../components/Map";
+
+import HostMap from "../components/HostMap";
 import HostGame from "../components/HostGame";
 
-export function Host() {
+export function Find() {
 	const [ coords, setCoords ] = useState({});
+	const [ position, setPosition ] = useState([ 0, 0 ]);
+	
+	//TODO Invoke this by something other than component execution
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(({ coords } = {}) => {
+			setPosition([ coords.latitude, coords.longitude ]);
+		});
+	}
+
 	const [ ws, setWs ] = useState();
 
 	useEffect(() => {
 		const ws = new WebSocket(`wss://kiszka.com:3001`);
-		// ws.addEventListener("open", () => {
-		// 	ws.send(JSON.stringify({
-		// 		type: "find",
-		// 	}));
-		// });
-		
-		// ws.addEventListener("message", (payload) => {
-		// 	try {
-		// 		const msg = JSON.parse(payload.data);
-
-		// 		if(msg.type === "games") {
-		// 			setGames(msg.data);
-		// 		}
-		// 	} catch(e) {}
-		// });
-
 		setWs(ws);
 
 		return () => {
@@ -45,15 +39,20 @@ export function Host() {
 			}
 		}));
 	}
-	function onPosition([ lat, long ], coords) {
-		//TODO 
+
+	if(position[ 0 ] === 0 || position[ 1 ] === 0) {
+		return (
+			<div className="font-bold">Acquiring GPS Position...</div>
+		);
 	}
 
 	return (
-		<Map onPosition={ pos => setCoords(pos) }>
-			<HostGame onSubmit={ obj => onSubmit(obj) } />
-		</Map>
+		<div className="mt-5 flex flex-col h-screen">
+			<HostMap onPosition={ pos => setCoords(pos) }>
+				<HostGame onSubmit={ obj => onSubmit(obj) } />
+			</HostMap>
+		</div>
 	);
 }
 
-export default Host;
+export default Find;
