@@ -31,9 +31,10 @@ export function Find() {
 		};
 	}, []);
 
+	//TODO	The game-derived draggable markers needs better way to pass to Map, as the Markers likely need to respond to hover events and contain game information
 	return (
 		<div className="mt-5 flex flex-row">
-			<Map />
+			<Map markers={ games.map(game => [ game.lat, game.long ]) } />
 			<FindGame games={ games } />
 		</div>
 	);
