@@ -32,9 +32,10 @@ export function Find() {
 	}, []);
 
 	return (
-		<Map>
+		<div className="mt-5 flex flex-row">
+			<Map />
 			<FindGame games={ games } />
-		</Map>
+		</div>
 	);
 }
 

@@ -22,7 +22,7 @@ export function HostGame({ onSubmit }) {
 	}
 
 	return (
-		<div className="absolute left-0 top-[50px] w-[500px] h=[500px] p-[3rem]">
+		<div className="absolute left-0 top-[125px] w-[500px] h-[500px] p-[3rem] pt-0">
 			<div className="grid grid-flow-row auto-rows-max">
 				<input type="text" className="border border-white rounded bg-transparent h-10 p-5 text-white bg-gray-700 bg-opacity-50 hover:bg-white hover:border-gray-700 hover:text-gray-700" placeholder="Category" value={ state.category } onChange={ e => update("category", e.target.value) } />
 				<input type="text" className="border border-white rounded bg-transparent h-10 p-5 text-white bg-gray-700 bg-opacity-50 hover:bg-white hover:border-gray-700 hover:text-gray-700" placeholder="Activity" value={ state.activity } onChange={ e => update("activity", e.target.value) } />

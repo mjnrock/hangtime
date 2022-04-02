@@ -53,7 +53,8 @@ export function Map({ children } = {}) {
 
 	return (
 		<div id="MapRoot">
-			<MapContainer
+			<div className="border bg-blue-600 w-[500px] h-[500px] top-[200px] left-0"></div>
+			{/* <MapContainer
 				center={ position }
 				zoom={ 15 }
 				scrollWheelZoom={ true }
@@ -70,12 +71,7 @@ export function Map({ children } = {}) {
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
 				<DraggableMarker center={ position } />
-				{/* <Marker position={position}>
-					<Popup>
-						A pretty CSS3 popup. <br /> Easily customizable.
-					</Popup>
-				</Marker> */}
-			</MapContainer>
+			</MapContainer> */}
 
 			{ children }
 		</div>
