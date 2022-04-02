@@ -38,12 +38,17 @@ function DraggableMarker({ center } = {}) {
 	);
 }
 
-export function Map({ children } = {}) {
+export function Map({ onPosition, children } = {}) {
 	const [ position, setPosition ] = useState([]);
 
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(({ coords } = {}) => {
-			setPosition([ coords.latitude, coords.longitude ]);
+			const pos = [ coords.latitude, coords.longitude ];
+
+			setPosition(pos);
+			if(typeof onPosition === "function") {
+				onPosition(pos, coords);
+			}
 		});
 	}
 

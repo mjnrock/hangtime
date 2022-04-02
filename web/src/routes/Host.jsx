@@ -3,6 +3,7 @@ import Map from "../components/Map";
 import HostGame from "../components/HostGame";
 
 export function Host() {
+	const [ coords, setCoords ] = useState({});
 	const [ ws, setWs ] = useState();
 
 	useEffect(() => {
@@ -37,12 +38,19 @@ export function Host() {
 		// }));
 		ws.send(JSON.stringify({
 			type: "host",
-			payload: obj,
+			payload: {
+				...obj,
+				lat: coords[ 0 ],
+				long: coords[ 1 ],
+			}
 		}));
+	}
+	function onPosition([ lat, long ], coords) {
+		//TODO 
 	}
 
 	return (
-		<Map>
+		<Map onPosition={ pos => setCoords(pos) }>
 			<HostGame onSubmit={ obj => onSubmit(obj) } />
 		</Map>
 	);

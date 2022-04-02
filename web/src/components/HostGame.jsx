@@ -31,7 +31,7 @@ export function HostGame({ onSubmit }) {
 			<div className="grid grid-flow-row auto-rows-max">
 				<input type="text" className="border border-white rounded bg-transparent h-10 p-5 text-white bg-gray-700 bg-opacity-50 hover:bg-white hover:border-gray-700 hover:text-gray-700" placeholder="Tagline" value={ state.subject } onChange={ e => update("subject", e.target.value) } />
 				<textarea type="text" className="mt-1 border border-white rounded bg-transparent h-[120px] p-5 pt-2 text-white bg-gray-700 bg-opacity-50 hover:bg-white hover:border-gray-700 hover:text-gray-700" placeholder="Game Details" value={ state.comment } onChange={ e => update("comment", e.target.value) }></textarea>
-				<input type="text" className="mt-1 border border-white rounded bg-transparent h-10 p-5 text-white bg-gray-700 bg-opacity-50 hover:bg-white hover:border-gray-700 hover:text-gray-700" placeholder="Tagline" value={ state.radius } onChange={ e => update("radius", e.target.value) } />
+				<input type="text" className="mt-1 border border-white rounded bg-transparent h-10 p-5 text-white bg-gray-700 bg-opacity-50 hover:bg-white hover:border-gray-700 hover:text-gray-700" placeholder="Tagline" value={ state.radius } onChange={ e => update("radius", ~~e.target.value) } />
 			</div>
 
 			<div className="grid grid-flow-row auto-rows-max">
