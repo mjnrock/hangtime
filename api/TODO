@@ -1,0 +1,7 @@
+API:
+	Find:
+		☐ Add model filters for
+			☐ Category
+			☐ Activity
+			☐ DateTime
+		☐ Add route parameters to activate model filters

@@ -75,6 +75,7 @@ export function Map({ onPosition, markers = [], children } = {}) {
 				<DraggableMarker center={ position } />
 
 				{
+					//? There appears to be pretty solid intergration between ReactLeaflet and Leaflet -- explore further
 					//TODO Make a list of game icons to replace the Marker icons
 					markers.map((pos, i) => <Marker position={ pos } key={ i } icon={ L.icon({
 						iconUrl: "marker-icon2.png",

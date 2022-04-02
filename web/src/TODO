@@ -1,0 +1,34 @@
+React:
+	Game:
+		☐ Create <Game /> @Component
+			☐ Accept $game prop for details
+			☐ Expose callback props for parent component
+		☐ Invoke <Game /> in #Find on <GameCard.click />
+			☐ Occupy entire <GameList /> via $spotlight prop
+			☐ Semi-transparent black surrounding overlay
+			☐ Click "Return" button to close
+		☐ Create <GameList />
+			☐ Contain and group <GameCards />
+			☐ Create $spotlight prop
+				☐ Hide all <GameCards />
+				☐ Fill with <Game />
+	Find:
+		☐ Web Screen
+			☐ 2 vertical panes
+				☐ Search pane in top
+					☐ Category dropdown
+					☐ Activity dropdown
+					☐ DateTime range picker
+					☐ OnChange call API for updated data
+				☐ Games pane in bottom, 2 pane (60/40) @UI
+					☐ Fill <Map /> to left container size @UI
+					☐ Fill <GameList /> to right container @UI
+		☐ Click <GameCard /> to spotlight that game @UI
+			☐ MoveMap > FlyTo, ZoomTo Marker
+			☐ Change opacity to 100%
+			☐ Change opacity of all other markers to 0%
+				☐ Unselect <GameCard />, change back to 100%
+		☐ Hover <GameCard /> to dynaically highlight Map Marker
+			☐ Change opacity to 100%
+			☐ Change opacity of all other markers to 40%
+				☐ Unhover <GameCard />, change back to 100%
