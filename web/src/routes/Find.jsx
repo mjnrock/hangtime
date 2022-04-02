@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 import dateFormat from "dateformat";
+import cn from "classnames";
 
 import FindMap from "../components/FindMap";
 import GameList from "../components/GameList";
+
+const CSS = {
+	Input: cn("border rounded m-1 p-2 flex-1 bg-gray-700 text-white border-white hover:bg-white hover:text-gray-700 hover:border-gray-700"),
+	Background: {
+		Dark: cn("bg-gray-700 text-white border-white bg-opacity-70"),
+	}
+};
 
 export function Find() {
 	const [ position, setPosition ] = useState([ 0, 0 ]);
@@ -74,16 +82,16 @@ export function Find() {
 		<div className="mt-5 flex flex-col h-screen">
 			{/* //? Find - Filter */}
 			<div className="w-full text-center">
-				<div className="flex flex-col">
+				<div className={ cn("flex flex-col border p-1 rounded m-1", CSS.Background.Dark) }>
 					<div className="flex">
-						<input type="text" placeholder="Category" value={ state.filter.category.join("") } className="border rounded m-4 p-2 flex-1" />
-						<input type="text" placeholder="Activity" value={ state.filter.activity.join("") } className="border rounded m-4 p-2 flex-1" />
+						<input type="text" placeholder="Category" value={ state.filter.category.join("") } className={ cn(CSS.Input) } />
+						<input type="text" placeholder="Activity" value={ state.filter.activity.join("") } className={ cn(CSS.Input) } />
 					</div>
 					
 					<div className="flex">
-						<input type="number" placeholder="Radius" value={ state.filter.radius } className="border rounded m-4 p-2 flex-1" />
-						<input type="datetime-local" placeholder="Time Start" value={ dateFormat(state.filter.start, "yyyy-mm-dd'T'HH:MM") } className="border rounded m-4 p-2 flex-1" />
-						<input type="datetime-local" placeholder="Time End" value={ dateFormat(state.filter.end, "yyyy-mm-dd'T'HH:MM") } className="border rounded m-4 p-2 flex-1" />
+						<input type="number" placeholder="Radius" value={ state.filter.radius } className={ cn(CSS.Input) } />
+						<input type="datetime-local" placeholder="Time Start" value={ dateFormat(state.filter.start, "yyyy-mm-dd'T'HH:MM") } className={ cn(CSS.Input) } />
+						<input type="datetime-local" placeholder="Time End" value={ dateFormat(state.filter.end, "yyyy-mm-dd'T'HH:MM") } className={ cn(CSS.Input) } />
 					</div>
 				</div>
 			</div>

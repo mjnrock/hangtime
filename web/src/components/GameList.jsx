@@ -1,9 +1,15 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import cn from "classnames";
 
 import GameCard from "./GameCard";
 import Game from "./Game";
-import { useEffect } from "react";
+
+const CSS = {
+	Input: cn('border', 'rounded', 'm-1', 'p-2', 'flex-1', 'bg-gray-700', 'text-white', 'border-white'),
+	Background: {
+		Dark: cn("bg-gray-700 text-white border-white bg-opacity-70"),
+	}
+};
 
 export function GameList({ games, onSpotlight }) {
 	const [ spotlight, setSpotlight ] = useState(false);
@@ -19,7 +25,7 @@ export function GameList({ games, onSpotlight }) {
 	}
 
 	return (
-		<div className="border border-gray-200 rounded p-2 mx-2 bg-white text-gray-800 h-[750px]">
+		<div className={ cn("m-2 mt-0 bg-white text-gray-700 h-[750px]") }>
 			{
 				spotlight ? (
 					<Game game={ spotlight } onReturn={ () => setSpotlight(false) } onRequest={ () => requestGame(spotlight) } />

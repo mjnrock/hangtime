@@ -1,6 +1,7 @@
 import React, { useState, useRef, useMemo, useCallback, Children } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
+import cn from "classnames";
 
 function DraggableMarker({ center } = {}) {
 	const [ position, setPosition ] = useState(center);
@@ -35,7 +36,7 @@ function DraggableMarker({ center } = {}) {
 	);
 }
 
-export function Map({ onPosition, markers = [], children } = {}) {
+export function Map({ onPosition, markers = [], children, className } = {}) {
 	const [ position, setPosition ] = useState([]);
 
 	if (navigator.geolocation) {
@@ -54,17 +55,14 @@ export function Map({ onPosition, markers = [], children } = {}) {
 	}
 
 	return (
-		<div id="MapRoot">
+		<>
 			{/* <div className="border bg-blue-600 w-[500px] h-[500px] top-[200px] left-0"></div> */}
 			<MapContainer
 				center={ position }
 				zoom={ 13 }
 				scrollWheelZoom={ true }
 				preferCanvas={ true }
-				style={ {
-					height: 500,
-					width: 500,
-				} }
+				className={ cn(className) }
 			>
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -84,7 +82,7 @@ export function Map({ onPosition, markers = [], children } = {}) {
 			</MapContainer>
 
 			{ children }
-		</div>
+		</>
 	);
 }
 

@@ -1,8 +1,16 @@
 import { useState } from "react";
 import dateFormat from "dateformat";
 import { v4 as uuid } from "uuid";
+import cn from "classnames";
 
-export function HostGame({ onSubmit }) {
+const CSS = {
+	Input: cn("border rounded m-1 p-2 flex-1 bg-gray-700 text-white border-white hover:bg-white hover:text-gray-700 hover:border-gray-700"),
+	Background: {
+		Dark: cn("bg-gray-700 text-white border-white bg-opacity-70"),
+	}
+};
+
+export function HostGame({ onSubmit, className }) {
 	const [ state, setState ] = useState({
 		id: uuid(),
 		category: `Sports`,
@@ -22,25 +30,25 @@ export function HostGame({ onSubmit }) {
 	}
 
 	return (
-		<div className="absolute left-0 top-[125px] w-[500px] h-[500px] p-[3rem] pt-0">
+		<div className={ cn(className) }>
 			<div className="grid grid-flow-row auto-rows-max">
-				<input type="text" className="border border-white rounded h-10 p-5 text-white bg-gray-700 bg-opacity-50 hover:bg-white hover:border-gray-700 hover:text-gray-700" placeholder="Category" value={ state.category } onChange={ e => update("category", e.target.value) } />
-				<input type="text" className="border border-white rounded h-10 p-5 text-white bg-gray-700 bg-opacity-50 hover:bg-white hover:border-gray-700 hover:text-gray-700" placeholder="Activity" value={ state.activity } onChange={ e => update("activity", e.target.value) } />
+				<input type="text" className={ cn(CSS.Input) } placeholder="Category" value={ state.category } onChange={ e => update("category", e.target.value) } />
+				<input type="text" className={ cn(CSS.Input) } placeholder="Activity" value={ state.activity } onChange={ e => update("activity", e.target.value) } />
 			</div>
 
 			<div className="grid grid-flow-row auto-rows-max">
-				<input type="text" className="border border-white rounded h-10 p-5 text-white bg-gray-700 bg-opacity-50 hover:bg-white hover:border-gray-700 hover:text-gray-700" placeholder="Tagline" value={ state.subject } onChange={ e => update("subject", e.target.value) } />
-				<textarea type="text" className="mt-1 border border-white rounded h-[120px] p-5 pt-2 text-white bg-gray-700 bg-opacity-50 hover:bg-white hover:border-gray-700 hover:text-gray-700" placeholder="Game Details" value={ state.comment } onChange={ e => update("comment", e.target.value) }></textarea>
-				<input type="text" className="mt-1 border border-white rounded h-10 p-5 text-white bg-gray-700 bg-opacity-50 hover:bg-white hover:border-gray-700 hover:text-gray-700" placeholder="Tagline" value={ state.radius } onChange={ e => update("radius", ~~e.target.value) } />
+				<input type="text" className={ cn(CSS.Input) } placeholder="Tagline" value={ state.subject } onChange={ e => update("subject", e.target.value) } />
+				<textarea type="text" className={ cn(CSS.Input, "h-[120px]") } placeholder="Game Details" value={ state.comment } onChange={ e => update("comment", e.target.value) }></textarea>
+				<input type="text" className={ cn(CSS.Input) } placeholder="Tagline" value={ state.radius } onChange={ e => update("radius", ~~e.target.value) } />
 			</div>
 
 			<div className="grid grid-flow-row auto-rows-max">
-				<input type="datetime-local" className="border border-white rounded h-10 p-5 text-white bg-gray-700 bg-opacity-50 hover:bg-white hover:border-gray-700 hover:text-gray-700" value={ dateFormat(state.start, "yyyy-mm-dd'T'HH:MM:ss") } onChange={ e => update("start", new Date(e.target.value)) } />
-				<input type="datetime-local" className="border border-white rounded h-10 p-5 text-white bg-gray-700 bg-opacity-50 hover:bg-white hover:border-gray-700 hover:text-gray-700" value={ dateFormat(state.end, "yyyy-mm-dd'T'HH:MM:ss") } onChange={ e => update("end", new Date(e.target.value)) } />
+				<input type="datetime-local" className={ cn(CSS.Input) } value={ dateFormat(state.start, "yyyy-mm-dd'T'HH:MM:ss") } onChange={ e => update("start", new Date(e.target.value)) } />
+				<input type="datetime-local" className={ cn(CSS.Input) } value={ dateFormat(state.end, "yyyy-mm-dd'T'HH:MM:ss") } onChange={ e => update("end", new Date(e.target.value)) } />
 			</div>
 
 			<div className="grid grid-flow-row auto-rows-max mt-5">
-				<button className="border border-white rounded text-white bg-gray-700 bg-opacity-50 p-3 text-center hover:bg-white hover:border-gray-700 hover:text-gray-700" onClick={ e => onSubmit(state) }>Create</button>
+				<button className={ cn(CSS.Input) } onClick={ e => onSubmit(state) }>Create</button>
 			</div>
 		</div>
 	);
