@@ -44,8 +44,7 @@ export function FindMap({ markers = [], position, children, spotlight } = {}) {
 				scrollWheelZoom={ true }
 				preferCanvas={ true }
 				style={ {
-					height: "100%",
-					width: "100%",
+					height: "750px",
 				} }
 			>
 				<TileLayer

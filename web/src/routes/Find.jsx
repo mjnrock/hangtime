@@ -12,6 +12,7 @@ export function Find() {
 		filter: {
 			category: [ "Sports" ],
 			activity: [ "Basketball" ],
+			radius: 10,
 			start: Date.now(),
 			end: Date.now() + 7200000,
 		},
@@ -72,10 +73,18 @@ export function Find() {
 	return (
 		<div className="mt-5 flex flex-col h-screen">
 			<div className="w-full">
-				<input type="text" placeholder="Category" value={ state.filter.category.join("") } className="border rounded m-4 p-2 w-fit" />
-				<input type="text" placeholder="Activity" value={ state.filter.activity.join("") } className="border rounded m-4 p-2 w-fit" />
-				<input type="datetime-local" placeholder="Time Start" value={ dateFormat(state.filter.start, "yyyy-mm-dd'T'HH:MM") } className="border rounded m-4 p-2 w-fit" />
-				<input type="datetime-local" placeholder="Time End" value={ dateFormat(state.filter.end, "yyyy-mm-dd'T'HH:MM") } className="border rounded m-4 p-2 w-fit" />
+				<div className="flex flex-col">
+					<div className="">
+						<input type="text" placeholder="Category" value={ state.filter.category.join("") } className="border rounded m-4 p-2 w-fit" />
+						<input type="text" placeholder="Activity" value={ state.filter.activity.join("") } className="border rounded m-4 p-2 w-fit" />
+					</div>
+					
+					<div className="">
+						<input type="number" placeholder="Radius" value={ state.filter.radius } className="border rounded m-4 p-2 w-fit" />
+						<input type="datetime-local" placeholder="Time Start" value={ dateFormat(state.filter.start, "yyyy-mm-dd'T'HH:MM") } className="border rounded m-4 p-2 w-fit" />
+						<input type="datetime-local" placeholder="Time End" value={ dateFormat(state.filter.end, "yyyy-mm-dd'T'HH:MM") } className="border rounded m-4 p-2 w-fit" />
+					</div>
+				</div>
 			</div>
 
 			<div className="flex flex-row">
