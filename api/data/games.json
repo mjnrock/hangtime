@@ -17,7 +17,7 @@
 		"activity": "Basketball",
 		"subject": "b dfgds 3 5",
 		"comment": "q2345 245234 23423 4fewf q",
-		"radius": "14",
+		"radius": 14,
 		"start": 1648859436273,
 		"end": 1648863036273,
 		"lat": 42.7429,
