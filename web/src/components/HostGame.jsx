@@ -39,7 +39,6 @@ export function HostGame({ onSubmit, className }) {
 			<div className="grid grid-flow-row auto-rows-max">
 				<input type="text" className={ cn(CSS.Input) } placeholder="Tagline" value={ state.subject } onChange={ e => update("subject", e.target.value) } />
 				<textarea type="text" className={ cn(CSS.Input, "h-[120px]") } placeholder="Game Details" value={ state.comment } onChange={ e => update("comment", e.target.value) }></textarea>
-				<input type="text" className={ cn(CSS.Input) } placeholder="Tagline" value={ state.radius } onChange={ e => update("radius", ~~e.target.value) } />
 			</div>
 
 			<div className="grid grid-flow-row auto-rows-max">
