@@ -14,21 +14,21 @@ export class WebSocketClient extends Component {
 		};
 	}
 
-	static Has(comp) {
-		return comp instanceof WebSocketClient
-			|| (
-				"connection" in comp
-				&& "middleware" in comp
-			);
-	}
+	// static Has(comp) {
+	// 	return comp instanceof WebSocketClient
+	// 		|| (
+	// 			"connection" in comp
+	// 			&& "middleware" in comp
+	// 		);
+	// }
 	
-	dispatch(action, ...args) {
-		WebSocketClient.System.$.invoke(action, this, ...args);
+	// dispatch(action, ...args) {
+	// 	WebSocketClient.System.$.invoke(action, this, ...args);
 
-		if(this.config.dispatchToParent === true) {
-			this.parent.invoke(action, this, ...args);
-		}
-	}
+	// 	if(this.config.dispatchToParent === true) {
+	// 		this.parent.invoke(action, this, ...args);
+	// 	}
+	// }
 	
 	useNodeBuffer() {
 		this.connection.binaryType = "nodebuffer";

@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import dateFormat from "dateformat";
 
 import GameCard from "../components/GameCard";
 
+import { useAgency } from "../@hive/lib/react/useAgency";
+import { Context } from "./../App";
+
 export function Test() {
+	const { dispatch, state } = useAgency(Context);
+
 	const [ ws, setWs ] = useState();
 	const [ games, setGames ] = useState([]);
 
@@ -43,12 +48,15 @@ export function Test() {
 
 	const [ datetime, setDatetime ] = useState(Date.now());
 
+	console.log(state)
+
 	return (
 		<div>
 			Tests
 
 			<input type="datetime-local" value={ dateFormat(datetime, "yyyy-mm-dd'T'HH:MM:ss") } onChange={ e => setDatetime(new Date(e.target.value)) } />
 
+			<button onClick={ e => dispatch("test", 1, 2, 3) }>REFRESH</button>
 			<button onClick={ e => hostGame() }>Host</button>
 			<button onClick={ e => findGame() }>Find</button>
 

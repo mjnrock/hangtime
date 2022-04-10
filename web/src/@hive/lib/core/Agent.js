@@ -1,27 +1,29 @@
 import { v4 as uuid } from "uuid";
 
-export class Agent {
-	static NotifyTrigger = "@update";
-	
-	constructor({ state = {}, triggers = [], config, namespace, id } = {}) {
+export class Agent {	
+	constructor({ state = {}, triggers = [], config, namespace, id, globals = {} } = {}) {
 		this.id = id || uuid();
 
 		this.state = state;
 		this.triggers = new Map(triggers);
 
 		this.config = {
-			isReducer: false,	// Make ALL triggers return a state -- to exclude a trigger from state, create a * handler that returns true on those triggers
+			isReducer: true,	// Make ALL triggers return a state -- to exclude a trigger from state, create a * handler that returns true on those triggers
 			allowRPC: true,		// If no trigger handlers exist AND an internal method is named equal to the trigger, pass ...args to that method
 
 			queue: new Set(),
 			isBatchProcessing: false,
 			maxBatchSize: 1000,
 
-			//TODO There's a lot of nuance here that needs to be worked out, but key here added as a future addition
-			namespace: typeof namespace === "function" ? namespace : trigger => trigger,
+			notifyTrigger: "@update",
+			dispatchTrigger: "@dispatch",
+
+			namespace,
 
 			//? These will be added to all @payloads
-			globals: {},
+			globals: {
+				...globals,
+			},
 
 			...config,
 		};
@@ -108,6 +110,7 @@ export class Agent {
 		return [
 			args,
 			{
+				namespace: this.config.namespace,
 				trigger: trigger,
 				target: this,
 				state: this.state,
@@ -125,22 +128,29 @@ export class Agent {
 	 * batching vs immediate invocations
 	 */
 	__handleInvocation(trigger, ...args) {
+		// Prevent directly invoking specialty hooks
 		if(typeof trigger === "string" && trigger[ 0 ] === "$") {
 			return false;
 		}
-
+		
 		// Many contingent handlers receive the same payload, so abstract it here
 		const payload = this.__generatePayload({ trigger, args });
-
+		
 		const handlers = this.triggers.get(trigger);
-		if(!handlers.length) {
+		if(trigger === this.config.notifyTrigger) {
+			for(let handler of handlers) {
+				handler(...payload);
+			}
+			
+			return true;
+		} else if(handlers.size === 0) {
 			// Verify that the RPC has a landing method
 			if(this.config.allowRPC === true && typeof trigger === "string" && typeof this[ trigger ] === "function") {
 				this[ trigger ](...args);
-
+				
 				return true;
 			}
-
+			
 			return false;
 		}
 
@@ -157,21 +167,33 @@ export class Agent {
 		}
 
 		if(this.config.isReducer === true) {
-			let next;
+			let next = this.state;
 			for(let handler of handlers) {
-				next = handler(...payload);
+				const last = next;
+
+				next = handler(payload[ 0 ], {
+					state: next,
+					...payload[ 1 ],
+				});
+
+				if(next === void 0) {
+					next = last;
+				}
 			}
-	
+
+			
 			const oldState = this.state;
 			this.state = next;
-	
+			
 			if(Object.keys(this.state).length && oldState !== this.state) {
-				this.invoke(Agent.NotifyTrigger, { current: next, previous: oldState });
+				this.invoke(this.config.notifyTrigger, { current: next, previous: oldState });
 			}
-		} else {			
+		} else {
 			for(let handler of handlers) {
 				handler(...payload);
 			}
+			
+			this.invoke(this.config.dispatchTrigger, { current: this.state });
 		}
 
 		/**
@@ -179,10 +201,10 @@ export class Agent {
 		 * Treat these like Effects
 		 */
 		for(let fn of (this.triggers.get("$post") || [])) {
-			fn(hadMatch, ...payload);
+			fn(...payload);
 		}
 
-		return hadMatch;
+		return true;
 	}
 
 	/**
@@ -193,34 +215,20 @@ export class Agent {
 	 * directly, or by passing the trigger type and
 	 * data args and a Signal will be created
 	 */
-	invoke(signalOrTrigger, ...args) {
-		let signal;
-
-		if(Signal.Conforms(signalOrTrigger)) {
-			signal = signalOrTrigger;
-		} else {
-			signal = Signal.Create({
-				type: signalOrTrigger,
-				data: args,
-				emitter: this,
-			}, {
-				coerced: true,
-			});
-		}
-
+	invoke(trigger, ...args) {
 		/**
 		 * Short-circuit the invocation if the trigger has not been loaded
 		 */
-		if(!this.triggers.has(signal.type)) {
+		if(!this.triggers.has(trigger)) {
 			return false;
 		}
 
 		if(this.config.isBatchProcessing === true) {
-			this.config.queue.add(signal);
+			this.config.queue.add([ trigger, ...args ]);
 
 			return true;
 		} else {
-			return this.__handleInvocation(signal);
+			return this.__handleInvocation(trigger, ...args);
 		}
 	}
 
@@ -237,8 +245,8 @@ export class Agent {
 		const runSize = Math.min(qty, this.config.maxBatchSize);
 
 		for(let i = 0; i < runSize; i++) {
-			const signal = queue[ i ];
-			const result = this.__handleInvocation(signal);
+			const [ trigger, ...args ] = queue[ i ];
+			const result = this.__handleInvocation(trigger, ...args);
 
 			results.push(result);
 		}
@@ -248,8 +256,8 @@ export class Agent {
 		return results;
 	}
 
-	async asyncInvoke(signalOrTrigger, ...args) {
-		return await Promise.resolve(this.invoke(signalOrTrigger, ...args));
+	async asyncInvoke(trigger, ...args) {
+		return await Promise.resolve(this.invoke(trigger, ...args));
 	}
 	async asyncProcess(qty = this.config.maxBatchSize) {
 		return await Promise.resolve(this.process(qty));
