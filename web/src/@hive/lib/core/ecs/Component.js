@@ -1,6 +1,8 @@
+import { v4 as uuid } from "uuid";
+
 export class Component {
-	constructor({ name } = {}) {
-		this.name = name;
+	constructor({ id } = {}) {
+		this.id = id || uuid();
 	}
 };
 

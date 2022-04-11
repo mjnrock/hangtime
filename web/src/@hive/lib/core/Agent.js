@@ -54,11 +54,13 @@ export class Agent {
 	/**
 	 * @trigger can be anything, not limited to strings
 	 */
-	addTrigger(trigger, handler) {
+	addTrigger(trigger, ...handler) {
 		let handlers = this.triggers.get(trigger) || new Set();
 		
-		if(typeof handler === "function") {
-			handlers.add(handler);
+		for(let fn of handler) {
+			if(typeof fn === "function") {
+				handlers.add(fn);
+			}
 		}
 
 		this.triggers.set(trigger, handlers);
@@ -80,11 +82,13 @@ export class Agent {
 
 		return this;
 	}
-	removeTrigger(trigger, handler) {
+	removeTrigger(trigger, ...handler) {
 		let handlers = this.triggers.get(trigger);
-
-		if(handlers instanceof Set) {
-			return handlers.delete(handler);
+		
+		for(let fn of handler) {
+			if(handlers instanceof Set) {
+				return handlers.delete(fn);
+			}
 		}
 
 		return false;
