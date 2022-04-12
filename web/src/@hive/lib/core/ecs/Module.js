@@ -1,5 +1,10 @@
 import { v4 as uuid } from "uuid";
 
+/**
+ * The Module is essentially a meta-wrapper around a Component that allows for a more
+ * useful paradigm, holding important references and having the ability to reseed whatever
+ * component it controls.
+ */
 export class Module {
 	constructor(nomen, { entity, componentClass, system, args = [], tags = [] } = {}) {
 		this.id = uuid();
