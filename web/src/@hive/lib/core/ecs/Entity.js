@@ -9,9 +9,12 @@ export class Entity extends Agent {
 		return new Proxy(this, {
 			get: (target, prop) => {
 				if(!(prop in target)) {
-					// Allow selection of Modules/Components directly
+					/**
+					 * NOTE: This is singularly used to access the Module.state (i.e. Component) directly,
+					 * via a << Entity[ module.name ] >> syntax.  See note in Component.
+					 */
 					if(target.modules.has(prop)) {
-						return target.modules.get(prop);
+						return target.modules.get(prop).state;
 					}
 				}
 

@@ -110,7 +110,7 @@ export class Agent {
 	/**
 	 * 
 	 */
-	__generatePayload({ trigger, args } = {}) {
+	__generatePayload({ id, trigger, args } = {}) {
 		return [
 			args,
 			{
@@ -119,6 +119,7 @@ export class Agent {
 				target: this,
 				state: this.state,
 				invoke: this.invoke,
+				_id: id,
 				
 				...this.config.globals,
 			}
@@ -138,7 +139,18 @@ export class Agent {
 		}
 		
 		// Many contingent handlers receive the same payload, so abstract it here
-		const payload = this.__generatePayload({ trigger, args });
+		let payload = this.__generatePayload({ id: uuid(), trigger, args });		
+		/**
+		 * ? Params hooks
+		 * These will change the data/@arguments contained in the @payload.  Use these
+		 * if you want to dynamically alter: @trigger, @args, or @payload.
+		 * 
+		 * NOTE: "Spoofing" is intentionally allowed -- apply necessary business logic
+		 * NOTE: This does NOT spread the payload -- it takes and returns a direct payload
+		 */
+		for(let fn of (this.triggers.get("$params") || [])) {
+			payload = fn(payload);
+		}
 		
 		const handlers = this.triggers.get(trigger);
 		if(trigger === this.config.notifyTrigger) {
@@ -170,7 +182,10 @@ export class Agent {
 			}
 		}
 
+		let invocationType;
 		if(this.config.isReducer === true) {
+			invocationType = this.config.notifyTrigger;
+
 			let next = this.state;
 			for(let handler of handlers) {
 				const last = next;
@@ -190,14 +205,16 @@ export class Agent {
 			this.state = next;
 			
 			if(Object.keys(this.state).length && oldState !== this.state) {
-				this.invoke(this.config.notifyTrigger, { current: next, previous: oldState });
+				this.invoke(invocationType, { current: next, previous: oldState });
 			}
 		} else {
+			invocationType = this.config.dispatchTrigger;
+
 			for(let handler of handlers) {
 				handler(...payload);
 			}
 			
-			this.invoke(this.config.dispatchTrigger, { current: this.state });
+			this.invoke(invocationType, { current: this.state });
 		}
 
 		/**
@@ -205,7 +222,7 @@ export class Agent {
 		 * Treat these like Effects
 		 */
 		for(let fn of (this.triggers.get("$post") || [])) {
-			fn(...payload);
+			fn(invocationType, ...payload);
 		}
 
 		return true;

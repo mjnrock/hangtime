@@ -1,7 +1,7 @@
 import { v4 as uuid } from "uuid";
 
 export class Module {
-	constructor(nomen, { entity, componentClass, systemInstance, args = [], tags = [] } = {}) {
+	constructor(nomen, { entity, componentClass, system, args = [], tags = [] } = {}) {
 		this.id = uuid();
 		this.nomen = nomen;		// The unique name for a Module
 		this.tags = new Set(tags);		// Any tags for filtering/selection
@@ -12,12 +12,17 @@ export class Module {
 		};
 
 		this.state = new this.classes.component(...this.defaultArgs);	// State *is* the component
-		this.system = systemInstance;	// Allow system ref to change, but have same nomen
-		this.entity = entity;
+		this.system = system;	// Allow system ref to change, but have same nomen
+		
+		if(entity) {
+			this.register(entity);
+		}
+
+		this.state.__module = this;		// See NOTE in Component file
 	}
 
-	static Add(entity, nomen, { componentClass, systemInstance, args = [] } = {}) {
-		const module = new this(nomen, { componentClass, systemInstance, args });
+	static Add(entity, nomen, { componentClass, system, args = [] } = {}) {
+		const module = new this(nomen, { componentClass, system, args });
 		module.register(entity);
 
 		return entity;
@@ -34,13 +39,13 @@ export class Module {
 	}
 
 	reseed(...args) {
-		if(!args.length) {
+		if(args.length === 0) {
 			this.state = new this.classes.component(...this.defaultArgs);
+		} else {
+			this.state = new this.classes.component(...args);
+		}		
 
-			return this;
-		}
-		
-		this.state = new this.classes.component(...args);
+		this.state.__module = this;
 
 		return this;
 	}
@@ -62,10 +67,9 @@ export class Module {
 
 		return this;
 	}
-	unregister(entity) {
-		entity.unregister(this.nomen);
-
+	unregister(entity) {		
 		if(entity === this.entity) {
+			entity.unregister(this.nomen);
 			this.entity = null;
 		}
 
