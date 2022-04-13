@@ -16,6 +16,7 @@ export class Entity extends Agent {
 					if(target.modules.has(prop)) {
 						return target.modules.get(prop).state;
 					}
+
 				}
 
 				return Reflect.get(target, prop);

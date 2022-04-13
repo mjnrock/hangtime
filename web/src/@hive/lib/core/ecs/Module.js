@@ -26,17 +26,16 @@ export class Module {
 		this.state.__module = this;		// See NOTE in Component file
 	}
 
-	static Add(entity, nomen, { componentClass, system, args = [] } = {}) {
-		const module = new this(nomen, { componentClass, system, args });
-		module.register(entity);
+	static Add(nomen, { entity, componentClass, system, args = [], tags = [] } = {}) {
+		const module = new this(nomen, { entity, componentClass, system, args, tags });
 
-		return entity;
+		return module;
 	}
 	static Remove(entity, nomen) {
 		const module = entity[ nomen ];
-		module.register(entity);
+		module.unregister(entity);
 
-		return entity;
+		return module;
 	}
 
 	$(trigger, ...args) {

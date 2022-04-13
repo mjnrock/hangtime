@@ -1,10 +1,10 @@
-import Component from "./core/ecs/Component";
+import Component from "../core/ecs/Component";
 
-export class WebSocketClient extends Component {
+export class ComponentWebSocketClient extends Component {
 	static System;
 
-	constructor(parent, { connection, middleware = {}, config = {}, ...opts } = {}) {
-		super(parent, { config, ...opts });
+	constructor({ connection, middleware = {} } = {}) {
+		super();
 
 		this.connection = connection;
 		this.middleware = {
@@ -13,22 +13,6 @@ export class WebSocketClient extends Component {
 			...middleware,
 		};
 	}
-
-	// static Has(comp) {
-	// 	return comp instanceof WebSocketClient
-	// 		|| (
-	// 			"connection" in comp
-	// 			&& "middleware" in comp
-	// 		);
-	// }
-	
-	// dispatch(action, ...args) {
-	// 	WebSocketClient.System.$.invoke(action, this, ...args);
-
-	// 	if(this.config.dispatchToParent === true) {
-	// 		this.parent.invoke(action, this, ...args);
-	// 	}
-	// }
 	
 	useNodeBuffer() {
 		this.connection.binaryType = "nodebuffer";
@@ -65,4 +49,4 @@ export class WebSocketClient extends Component {
 	}
 };
 
-export default WebSocketClient;
+export default ComponentWebSocketClient;

@@ -4,7 +4,7 @@ import Module from "./Module";
 //TODO Figure out a place to do a System Dictionary
 
 export class System extends Agent {
-	constructor(nomen, events = {}, { state, Agent = {} } = {}) {
+	constructor(nomen, events = [], { state, Agent = {} } = {}) {
 		super({ ...Agent, state });
 
 		// System expects this to match a Module.nomen exactly
@@ -12,7 +12,7 @@ export class System extends Agent {
 
 		this.toggle("isReducer", false);
 
-		for(let [ trigger, handlers ] of Object.entries(events)) {
+		for(let [ trigger, handlers ] of events) {
 			if(!Array.isArray(handlers)) {
 				handlers = [ handlers ];
 			}
