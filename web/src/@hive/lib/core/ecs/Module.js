@@ -26,12 +26,13 @@ export class Module {
 		this.state.__module = this;		// See NOTE in Component file
 	}
 
-	static Add(nomen, { entity, componentClass, system, args = [], tags = [] } = {}) {
+	static Register(nomen, { entity, componentClass, system, args = [], tags = [] } = {}) {
 		const module = new this(nomen, { entity, componentClass, system, args, tags });
+		// module.register(entity);
 
 		return module;
 	}
-	static Remove(entity, nomen) {
+	static Unregister(entity, nomen) {
 		const module = entity[ nomen ];
 		module.unregister(entity);
 

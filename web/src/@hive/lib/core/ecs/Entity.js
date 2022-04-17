@@ -33,24 +33,14 @@ export class Entity extends Agent {
 		return this.modules.delete(key, value);
 	}
 
-	/**
-	 * Will return either a single Module or
-	 * and array of Modules, depending on the
-	 * length of @inputs
-	 */
-	findModule(...inputs) {
-		let isSingleResult = false;
+	find(...nameIdOrTags) {
 		const ret = new Set();
-		for(let input of inputs) {
+		for(let input of nameIdOrTags) {
 			if(this.modules.has(input)) {
 				// @input is a name
 				ret.add(this.modules.get(input));
-
-				if(inputs.length === 1) {
-					isSingleResult = true;	// arg length is 1 AND value a name
-				}
 			} else {
-				for(let module of this.modules) {
+				for(let module of this.modules.values()) {
 					if(module.tags.has(input)) {
 						// @input is a tag
 						ret.add(module);
@@ -60,10 +50,6 @@ export class Entity extends Agent {
 					}
 				}
 			}
-		}
-
-		if(isSingleResult && ret.size === 1) {
-			return ret.values().next().value;
 		}
 
 		return [ ...ret ];

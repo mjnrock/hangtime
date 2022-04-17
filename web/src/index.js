@@ -19,6 +19,7 @@ FactoryWebSocket.Instance = new FactoryWebSocket([
 	},
 ]);
 
+//TODO There is a tremendous amount to unpack and cleanup here -- figure out the next ECS suite paradigm
 const testEntity = new EntityWebSocket({
 	WebSocket: {
 		args: [ {
@@ -32,6 +33,8 @@ const testEntity = new EntityWebSocket({
 	},
 });
 console.log(testEntity.websocket.$(`test`, 1, 2, 3));
+console.log(testEntity.find("websocket"));
+console.log(testEntity.find("cat", true));
 
 ReactDOM.render(
 	<React.StrictMode>

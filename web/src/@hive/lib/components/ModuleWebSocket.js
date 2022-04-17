@@ -14,7 +14,7 @@ export class ModuleWebSocket extends Module {
 		console.log(this)
 	}
 
-	static Add(entity, { system, args = [], tags = [] } = {}) {
+	static Register(entity, { system, args = [], tags = [] } = {}) {
 		return new this({ entity, componentClass: ComponentWebSocketClient, system, args, tags });
 	}
 };

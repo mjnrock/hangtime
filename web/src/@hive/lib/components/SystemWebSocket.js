@@ -18,8 +18,8 @@ export class SystemWebSocket extends System {
 		super(`websocket`, events, { state, Agent });
 	}
 
-	affix(entity, { args = [], tags = [] } = {}) {
-		return super.affix(entity, ComponentWebSocketClient, { args, tags });
+	register(entity, { args = [], tags = [], ...rest } = {}) {
+		return super.register(entity, ComponentWebSocketClient, { args, tags, ...rest });
 	}
 };
 
