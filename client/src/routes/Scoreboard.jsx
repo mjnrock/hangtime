@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BsPlus, BsDash, BsTrash } from "react-icons/bs";
 
 export function Scoreboard() {
 	const [ teams, setTeams ] = useState([
@@ -70,10 +71,10 @@ export function Scoreboard() {
 								<h3 className="text-lg font-medium leading-6 text-gray-900">{ team.name }</h3>
 								{ teams.length > 1 && (
 									<button
-										className="px-4 py-2 text-white bg-gray-500 rounded shadow-sm hover:bg-gray-600 active:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+										className="p-2 text-white bg-gray-500 rounded-full hover:bg-gray-600 active:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
 										onClick={ () => removeTeam(teamIndex) }
 									>
-										Remove Team
+										<BsTrash />
 									</button>
 								) }
 							</div>
@@ -91,23 +92,23 @@ export function Scoreboard() {
 										</div>
 										<div className="flex items-center justify-between space-x-4">
 											<button
-												className="px-4 py-2 text-white bg-green-500 rounded shadow-sm hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+												className="p-2 text-white bg-green-500 rounded-full hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
 												onClick={ () => incrementScore(teamIndex, playerIndex) }
 											>
-												+
+												<BsPlus />
 											</button>
 											<button
-												className="px-4 py-2 text-white bg-red-500 rounded shadow-sm hover:bg-red-600 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+												className="p-2 text-white bg-red-500 rounded-full hover:bg-red-600 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
 												onClick={ () => decrementScore(teamIndex, playerIndex) }
 											>
-												-
+												<BsDash />
 											</button>
 											{ team.players.length > 1 && (
 												<button
-													className="px-4 py-2 text-white bg-gray-500 rounded shadow-sm hover:bg-gray-600 active:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+													className="p-2 text-white bg-gray-500 rounded-full hover:bg-gray-600 active:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
 													onClick={ () => removePlayer(teamIndex, playerIndex) }
 												>
-													Remove Player
+													<BsTrash />
 												</button>
 											) }
 										</div>
@@ -115,10 +116,10 @@ export function Scoreboard() {
 								</div>
 							)) }
 							<button
-								className="px-4 py-2 mt-5 text-white bg-blue-500 rounded shadow-sm hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+								className="p-2 mt-5 text-white bg-blue-500 rounded-full hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
 								onClick={ () => addPlayer(teamIndex) }
 							>
-								Add Player
+								<BsPlus />
 							</button>
 						</div>
 					</div>
@@ -127,10 +128,10 @@ export function Scoreboard() {
 
 			<div className="mt-5">
 				<button
-					className="px-4 py-2 text-white bg-blue-500 rounded shadow-sm hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+					className="px-4 py-2 text-white bg-blue-500 rounded-full hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
 					onClick={ addTeam }
 				>
-					Add Team
+					<BsPlus />
 				</button>
 			</div>
 		</div>
