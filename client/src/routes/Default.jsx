@@ -6,16 +6,8 @@ import { Team } from "../apps/scoreboard/components/Team.jsx";
 export function Default() {
 	const { state: scoreboardData, dispatch: scoreboardDispatch } = useNode(Nodes.Scoreboard);
 
-	console.log("scoreboardData", scoreboardData);
-
-	const middleware = (payload) => {
-		scoreboardDispatch(payload);
-	};
-
 	return (
 		<>
-			<h1>Default</h1>
-
 			{
 				scoreboardData.teams.map((team, index) => {
 					return (
@@ -29,7 +21,7 @@ export function Default() {
 				})
 			}
 
-			<button onClick={ () => middleware({
+			<button onClick={ () => scoreboardDispatch({
 				type: "Scoreboard.addTeam",
 				data: {
 					team: State.Team({
