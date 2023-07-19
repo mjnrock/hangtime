@@ -13,7 +13,7 @@ export function Player({ player, data, dispatch }) {
 			<div className="flex items-center justify-between">
 				<div>
 					<h2 className="text-lg font-medium leading-6 text-gray-900">{ player?.info?.name }</h2>
-					<div className="max-w-xl mt-2 text-sm text-gray-500">Points: { player.stats.points }</div>
+					<div className="max-w-xl mt-2 text-sm text-gray-500">Points: <span className="font-bold">{ player.stats.points }</span></div>
 				</div>
 
 				<div className="flex items-center justify-between space-x-4">
@@ -27,7 +27,7 @@ export function Player({ player, data, dispatch }) {
 							},
 						}) }
 					>
-						<BsPlus />
+						<BsPlus className="text-[2rem]" />
 					</button>
 					<button
 						className="p-2 text-white bg-red-500 rounded-full hover:bg-red-600 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
@@ -39,7 +39,7 @@ export function Player({ player, data, dispatch }) {
 							},
 						}) }
 					>
-						<BsDash />
+						<BsDash className="text-[2rem]" />
 					</button>
 				</div>
 			</div>

@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { useNode } from "../@node/react/useNode.js";
 import { State, Nodes } from "../apps/scoreboard/main.js";
 
