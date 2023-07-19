@@ -1,5 +1,5 @@
 import { useNode } from "../@node/react/useNode.js";
-import { State, Nodes } from "../apps/scoreboard/main.js";
+import { Core as AppScoreboard, Nodes } from "../apps/scoreboard/main.js";
 
 import { Team } from "../apps/scoreboard/components/Team.jsx";
 
@@ -27,9 +27,9 @@ export function Scoreboard() {
 				<button
 					className="p-2 text-white bg-purple-500 rounded-full hover:bg-purple-600 active:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
 					onClick={ () => scoreboardDispatch({
-						type: "Scoreboard.addTeam",
+						type: "addTeam",
 						data: {
-							team: State.Team({
+							team: AppScoreboard.State.Team({
 								name: `Team ${ scoreboardData.teams.length + 1 }`,
 							}),
 						},

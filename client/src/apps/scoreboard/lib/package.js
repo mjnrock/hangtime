@@ -8,19 +8,10 @@ export const Name = {
 	Scoreboard: ScoreboardName,
 };
 
-const namespace = (name, reducers) => {
-	const obj = {};
-
-	for(const [ key, reducer ] of Object.entries(reducers)) {
-		obj[ `${ name }.${ key }` ] = reducer;
-	}
-
-	return obj;
-};
 export const Reducers = {
-	...namespace("Player", PlayerReducers),
-	...namespace("Team", TeamReducers),
-	...namespace("Scoreboard", ScoreboardReducers),
+	Player: PlayerReducers,
+	Team: TeamReducers,
+	Scoreboard: ScoreboardReducers,
 };
 
 export const State = {

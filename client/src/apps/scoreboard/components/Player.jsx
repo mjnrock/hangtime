@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { BsPlus, BsDash, BsChevronDown, BsChevronRight } from "react-icons/bs";
 
 export function Player({ player, data, dispatch }) {
@@ -20,7 +20,7 @@ export function Player({ player, data, dispatch }) {
 					<button
 						className="p-2 text-white bg-green-500 rounded-full hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
 						onClick={ () => scoreboardDispatch({
-							type: "Scoreboard.addPointsToPlayer",
+							type: "addPointsToPlayer",
 							data: {
 								playerId: player.id,
 								points: 1,
@@ -32,7 +32,7 @@ export function Player({ player, data, dispatch }) {
 					<button
 						className="p-2 text-white bg-red-500 rounded-full hover:bg-red-600 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
 						onClick={ () => scoreboardDispatch({
-							type: "Scoreboard.addPointsToPlayer",
+							type: "addPointsToPlayer",
 							data: {
 								playerId: player.id,
 								points: -1,
