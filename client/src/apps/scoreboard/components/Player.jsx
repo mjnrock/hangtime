@@ -36,7 +36,7 @@ export function Player({ player, data, dispatch }) {
 								key={ index }
 								className={ `p-2 text-white bg-${ color }-500 rounded-full hover:bg-${ color }-600 active:bg-${ color }-700 focus:outline-none focus:ring-2 focus:ring-${ color }-500 focus:ring-offset-2` }
 								onClick={ () => scoreboardDispatch({
-									type: "adjustPlayerPoints",
+									type: "addPointsToPlayer",
 									data: {
 										playerId: player.id,
 										points,
