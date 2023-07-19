@@ -8,6 +8,19 @@ export function Player({ player, data, dispatch }) {
 	const [ isExpanded, setIsExpanded ] = useState(false);
 	const toggleExpand = () => setIsExpanded(!isExpanded);
 
+	const incColor = "green";
+	const decColor = "red";
+	const pointAdjustments = [
+		[ 5, incColor, Bs5Circle ],
+		[ 3, incColor, Bs3Circle ],
+		[ 2, incColor, Bs2Circle ],
+		[ 1, incColor, BsPlus ],
+		[ -1, decColor, BsDash ],
+		[ -2, decColor, Bs2Circle ],
+		[ -3, decColor, Bs3Circle ],
+		[ -5, decColor, Bs5Circle ],
+	];
+
 	return (
 		<div className="mt-5">
 			<div className="flex items-center justify-between">
@@ -17,102 +30,23 @@ export function Player({ player, data, dispatch }) {
 				</div>
 
 				<div className="flex items-center justify-between space-x-4">
-					<button
-						className="p-2 text-white bg-green-500 rounded-full hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-						onClick={ () => scoreboardDispatch({
-							type: "addPointsToPlayer",
-							data: {
-								playerId: player.id,
-								points: 5,
-							},
-						}) }
-					>
-						<Bs5Circle className="text-[2rem]" />
-					</button>
-					<button
-						className="p-2 text-white bg-green-500 rounded-full hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-						onClick={ () => scoreboardDispatch({
-							type: "addPointsToPlayer",
-							data: {
-								playerId: player.id,
-								points: 3,
-							},
-						}) }
-					>
-						<Bs3Circle className="text-[2rem]" />
-					</button>
-					<button
-						className="p-2 text-white bg-green-500 rounded-full hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-						onClick={ () => scoreboardDispatch({
-							type: "addPointsToPlayer",
-							data: {
-								playerId: player.id,
-								points: 2,
-							},
-						}) }
-					>
-						<Bs2Circle className="text-[2rem]" />
-					</button>
-					<button
-						className="p-2 text-white bg-green-500 rounded-full hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-						onClick={ () => scoreboardDispatch({
-							type: "addPointsToPlayer",
-							data: {
-								playerId: player.id,
-								points: 1,
-							},
-						}) }
-					>
-						<BsPlus className="text-[2rem]" />
-					</button>
-					<button
-						className="p-2 text-white bg-red-500 rounded-full hover:bg-red-600 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-						onClick={ () => scoreboardDispatch({
-							type: "addPointsToPlayer",
-							data: {
-								playerId: player.id,
-								points: -1,
-							},
-						}) }
-					>
-						<BsDash className="text-[2rem]" />
-					</button>
-					<button
-						className="p-2 text-white bg-red-500 rounded-full hover:bg-red-600 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-						onClick={ () => scoreboardDispatch({
-							type: "addPointsToPlayer",
-							data: {
-								playerId: player.id,
-								points: -2,
-							},
-						}) }
-					>
-						<Bs2Circle className="text-[2rem]" />
-					</button>
-					<button
-						className="p-2 text-white bg-red-500 rounded-full hover:bg-red-600 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-						onClick={ () => scoreboardDispatch({
-							type: "addPointsToPlayer",
-							data: {
-								playerId: player.id,
-								points: -3,
-							},
-						}) }
-					>
-						<Bs3Circle className="text-[2rem]" />
-					</button>
-					<button
-						className="p-2 text-white bg-red-500 rounded-full hover:bg-red-600 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-						onClick={ () => scoreboardDispatch({
-							type: "addPointsToPlayer",
-							data: {
-								playerId: player.id,
-								points: -5,
-							},
-						}) }
-					>
-						<Bs5Circle className="text-[2rem]" />
-					</button>
+					{
+						pointAdjustments.map(([ points, color, Icon ], index) => (
+							<button
+								key={ index }
+								className={ `p-2 text-white bg-${ color }-500 rounded-full hover:bg-${ color }-600 active:bg-${ color }-700 focus:outline-none focus:ring-2 focus:ring-${ color }-500 focus:ring-offset-2` }
+								onClick={ () => scoreboardDispatch({
+									type: "adjustPlayerPoints",
+									data: {
+										playerId: player.id,
+										points,
+									},
+								}) }
+							>
+								<Icon className="text-[2rem]" />
+							</button>
+						))
+					}
 				</div>
 			</div>
 
