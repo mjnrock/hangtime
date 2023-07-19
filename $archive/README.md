@@ -1,0 +1,2 @@
+# Hangtime POC
+The `/web` directory contains a minimal idea for Hangtime.  Considering the scope of that effort, it has been broken out in milestones.  Accordingly, this was moved to `/$archive` so that a fresh version can be written, while still using this as a reference to bootstrap.
