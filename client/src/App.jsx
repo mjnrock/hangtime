@@ -7,6 +7,9 @@ import {
 import { Default } from "./routes/Default.jsx";
 import { Scoreboard } from "./routes/Scoreboard.jsx";
 
+import { IconSelector } from "./components/IconSelector.jsx";
+
+
 function NavBar({ children, ...props }) {
 	return (
 		<nav className="flex flex-row items-stretch border-b rounded shadow-sm bg-neutral-50 border-b-neutral-200" { ...props }>
@@ -34,6 +37,8 @@ export function App() {
 				<NavButton to="/" label="Home" />
 				<NavButton to="/scoreboard" label="Scoreboard" />
 			</NavBar>
+
+			<IconSelector />
 
 			<div className="m-2 border border-solid rounded border-neutral-200">
 				<Routes>
