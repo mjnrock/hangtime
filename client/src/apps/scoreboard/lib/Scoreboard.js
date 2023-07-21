@@ -15,6 +15,9 @@ export const Lookup = {
 
 		return acc;
 	}, null),
+	teamByPlayer: (state, playerId) => state.teams.find((team) => {
+		return team.roster.find((player) => player.id === playerId);
+	}),
 };
 
 export const Reducers = {
@@ -89,4 +92,5 @@ export default {
 	Name,
 	Reducers,
 	State,
+	Lookup,
 };

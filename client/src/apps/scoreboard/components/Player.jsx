@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { BsPlus, BsDash, BsChevronDown, BsChevronRight, Bs2Circle, Bs3Circle, Bs5Circle, BsCaretUpFill, BsCaretDownFill } from "react-icons/bs";
+import { EditableLabel } from "../../../components/EditableLabel.jsx";
 
 export function TimePointsTable({ player, isExpanded, decColor, incColor }) {
 	if(!isExpanded || !player.stats.pointsHistory.length) {
@@ -73,12 +74,43 @@ export function Player({ player, data, dispatch }) {
 	];
 
 	return (
-		<div className="mt-5">
+		<>
+			<div className="flex flex-row items-center justify-center w-full gap-2 p-2">
+				<div className="flex flex-col flex-1">
+					<EditableLabel
+						inputClassName="w-full px-2 py-1 border border-solid rounded outline-none border-neutral-200 focus:border-transparent focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+						labelClassName="w-full px-2 py-1 border border-solid rounded border-transparent"
+						initialValue={ player.info.name }
+						onChange={ value => scoreboardDispatch({
+							type: "editPlayerName",
+							data: {
+								playerId: player.id,
+								name: value
+							}
+						}) }
+						onBlur={ value => scoreboardDispatch({
+							type: "editPlayerName",
+							data: {
+								playerId: player.id,
+								name: value
+							}
+						}) }
+					/>
+					{/* 
+					<div className="flex flex-col max-w-xl mt-2 text-sm text-gray-500">
+						<div
+							className="flex flex-row cursor-pointer"
+							onClick={ toggleExpand }
+						>
+							{ isExpanded ? <BsChevronDown /> : <BsChevronRight /> }
+							<span className="ml-2">Points History</span>
+						</div>
+						<TimePointsTable player={ player } isExpanded={ isExpanded } decColor={ decColor } incColor={ incColor } />
+					</div> */}
+				</div>
 
-			<div className="flex items-center justify-between">
-				<div>
-					<h2 className="text-lg font-medium leading-6 text-gray-900">{ player?.info?.name }</h2>
-					<div className="max-w-xl mt-2 text-sm text-gray-500">Points: <span className="font-bold">{ player.stats.points }</span></div>
+				<div className="flex flex-row items-center justify-center flex-1">
+					<div className="text-4xl font-thin">{ player.stats.points }</div>
 				</div>
 
 				<div className="flex items-center justify-between space-x-4">
@@ -86,7 +118,7 @@ export function Player({ player, data, dispatch }) {
 						pointAdjustments.map(([ points, color, Icon ], index) => (
 							<button
 								key={ index }
-								className={ `p-2 text-white bg-${ color }-500 rounded-full hover:bg-${ color }-600 active:bg-${ color }-700 focus:outline-none focus:ring-2 focus:ring-${ color }-500 focus:ring-offset-2` }
+								className={ `p-2 text-white bg-${ color }-400 rounded-full hover:bg-${ color }-500 active:bg-${ color }-600 focus:outline-none focus:ring-2 focus:ring-${ color }-400 focus:ring-offset-2` }
 								onClick={ () => scoreboardDispatch({
 									type: "addPointsToPlayer",
 									data: {
@@ -101,28 +133,7 @@ export function Player({ player, data, dispatch }) {
 					}
 				</div>
 			</div>
-
-			<div className="flex flex-col max-w-xl mt-2 text-sm text-gray-500">
-				<div
-					className="flex flex-row cursor-pointer"
-					onClick={ toggleExpand }
-				>
-					{ isExpanded ? <BsChevronDown /> : <BsChevronRight /> }
-					<span className="ml-2">Points History</span>
-				</div>
-				<TimePointsTable player={ player } isExpanded={ isExpanded } decColor={ decColor } incColor={ incColor } />
-				{/* <div className={ `flex flex-col` }>
-					{
-						isExpanded &&
-						player.stats.pointsHistory.map(([ ts, points ], index) => (
-							<>
-								<div key={ index }>{ ts }: { points }</div>
-							</>
-						))
-					}
-				</div> */}
-			</div>
-		</div>
+		</>
 	);
 };
 

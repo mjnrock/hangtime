@@ -10,22 +10,24 @@ export function Scoreboard() {
 
 	return (
 		<div className="p-4 m-2 border rounded border-neutral-200">
-			{
-				scoreboardData.teams.map((team, index) => {
-					return (
-						<Team
-							key={ team.id }
-							data={ { scoreboardData } }
-							dispatch={ { scoreboardDispatch } }
-							team={ team }
-						/>
-					);
-				})
-			}
+			<div className="flex flex-col items-center justify-center gap-2">
+				{
+					scoreboardData.teams.map((team, index) => {
+						return (
+							<Team
+								key={ team.id }
+								data={ { scoreboardData } }
+								dispatch={ { scoreboardDispatch } }
+								team={ team }
+							/>
+						);
+					})
+				}
+			</div>
 
 			<div className="flex flex-row items-center justify-center mt-4">
 				<button
-					className="p-2 text-white bg-purple-500 rounded-full hover:bg-purple-600 active:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+					className="p-2 text-white bg-purple-400 rounded-full hover:bg-purple-500 active:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2"
 					onClick={ () => scoreboardDispatch({
 						type: "addTeam",
 						data: {

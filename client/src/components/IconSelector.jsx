@@ -1,19 +1,28 @@
 import React, { useState } from "react";
 import * as BsIcons from "react-icons/bs";
 
-export const IconSelector = () => {
+/**
+ * This is basically a component version of this page:
+ * https://icons.getbootstrap.com/
+ * 
+ * It's a searchable list of all the icons available in react-icons/bs, allowing
+ * a user to do something with a selected icon.
+ */
+export const IconSelector = ({ onSelect }) => {
 	const [ searchTerm, setSearchTerm ] = useState("");
 	const iconKeys = Object.keys(BsIcons).filter((key) =>
 		key.toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
 	const handleIconClick = (iconName) => {
-		console.log(iconName);
+		if(onSelect) {
+			onSelect(iconName, BsIcons[ iconName ]);	// Pass the icon name and the icon component to the onSelect callback
+		}
 	};
 
 	return (
-		<div className="flex flex-col items-center p-4">
-			<div className="relative w-1/2 mb-4">
+		<div className="flex flex-col items-center p-4 h-1/4">
+			<div className="relative flex w-1/2 mb-4 h-1/4">
 				<BsIcons.BsSearch className="absolute text-neutral-300 top-3 left-3" />
 				<input
 					type="text"
@@ -29,7 +38,7 @@ export const IconSelector = () => {
 					/>
 				) }
 			</div>
-			<div className="flex flex-wrap justify-center overflow-y-scroll max-h-[calc(100vh-5rem)]">
+			<div className="flex flex-wrap justify-center overflow-y-scroll max-h-[25vh]">
 				{ iconKeys.map((key) => {
 					const Icon = BsIcons[ key ];
 					return (

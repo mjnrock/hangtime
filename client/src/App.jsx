@@ -38,7 +38,11 @@ export function App() {
 				<NavButton to="/scoreboard" label="Scoreboard" />
 			</NavBar>
 
-			<IconSelector />
+			{/* <div className="flex flex-row items-center justify-center p-4">
+				<div className="w-1/2 h-1/4">
+					<IconSelector onSelect={ (iconName, Icon) => console.log(iconName, Icon) } />
+				</div>
+			</div> */}
 
 			<div className="m-2 border border-solid rounded border-neutral-200">
 				<Routes>

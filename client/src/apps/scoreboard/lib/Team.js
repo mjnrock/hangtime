@@ -16,6 +16,16 @@ export const Reducers = {
 		...state,
 		roster: state.roster.filter((p) => p.id !== player.id),
 	}),
+	replacePlayer: (state, { oldPlayer, newPlayer }) => ({
+		...state,
+		roster: state.roster.map((p) => {
+			if(p.id === oldPlayer.id) {
+				return newPlayer;
+			}
+
+			return p;
+		}),
+	}),
 	setName: (state, { name }) => ({
 		...state,
 		name,

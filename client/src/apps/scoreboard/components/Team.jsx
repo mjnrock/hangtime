@@ -1,36 +1,63 @@
 import { Player } from "./Player.jsx";
 import { State as PlayerState } from "../lib/Player.js";
-import { BsPlus } from "react-icons/bs";
+import { BsPerson } from "react-icons/bs";
+import { EditableLabel } from "../../../components/EditableLabel.jsx";
 
 export function Team({ team, data, dispatch }) {
 	const { scoreboardData } = data;
 	const { scoreboardDispatch } = dispatch;
 
 	return (
-		<div className="my-2 overflow-hidden bg-white border rounded shadow border-neutral-200">
-			<div className="px-4 py-5 sm:p-6">
-				<div className="flex items-center justify-between">
-					<h2 className="text-lg font-medium leading-6 text-gray-900">{ team.name }</h2>
-					<h2 className="max-w-xl mt-2 text-lg text-gray-500">Points: <span className="font-bold">{ team.roster.reduce((acc, player) => acc + player.stats.points, 0) }</span></h2>
+		<div className="flex flex-col items-center justify-center w-full border border-solid rounded shadow border-neutral-200">
+			<div className="flex flex-col items-center justify-center w-full">
+				<div className="flex flex-row items-center justify-center w-full gap-2 p-2">
+					<div className="flex flex-row items-center justify-center flex-1">
+						<EditableLabel
+							inputClassName="text-3xl w-full px-2 py-1 border border-solid rounded outline-none border-neutral-200 focus:border-transparent focus:ring-2 focus:ring-purple-400 focus:ring-offset-2"
+							labelClassName="text-3xl w-full px-2 py-1 border border-solid rounded border-transparent"
+							initialValue={ team.name }
+							onChange={ value => scoreboardDispatch({
+								type: "editTeamName",
+								data: {
+									teamId: team.id,
+									name: value
+								}
+							}) }
+							onBlur={ value => scoreboardDispatch({
+								type: "editTeamName",
+								data: {
+									teamId: team.id,
+									name: value
+								}
+							}) }
+						/>
+					</div>
 
-					<button
-						className="p-2 text-white bg-blue-500 rounded-full hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-						onClick={ () => scoreboardDispatch({
-							type: "addPlayerToTeam",
-							data: {
-								teamId: team.id,
-								player: PlayerState({
-									info: {
-										name: `Player ${ team.roster.length + 1 }`,
-									},
-								}),
-							}
-						}) }
-					>
-						<BsPlus className="text-[3rem]" />
-					</button>
+					<div className="flex flex-row items-center justify-center flex-1">
+						<div className="text-7xl">{ team.roster.reduce((acc, player) => acc + player.stats.points, 0) }</div>
+					</div>
+
+					<div className="flex flex-row items-center justify-center flex-1">
+						<button
+							className="p-2 text-white bg-blue-400 rounded-full hover:bg-blue-500 active:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+							onClick={ () => scoreboardDispatch({
+								type: "addPlayerToTeam",
+								data: {
+									teamId: team.id,
+									player: PlayerState({
+										info: {
+											name: `Player ${ team.roster.length + 1 }`,
+										},
+									}),
+								}
+							}) }
+						>
+							<BsPerson className="text-[3rem]" />
+						</button>
+					</div>
 				</div>
-				<div className="max-w-xl mt-2 text-sm text-gray-500">
+
+				<div className="flex flex-col items-center justify-center w-full">
 					{ team.roster.map((player, index) => {
 						return (
 							<Player
