@@ -6,8 +6,7 @@ import {
 
 import { Default } from "./routes/Default.jsx";
 import { Scoreboard } from "./routes/Scoreboard.jsx";
-
-import { IconSelector } from "./components/IconSelector.jsx";
+import { Form } from "./routes/Form.jsx";
 
 
 function NavBar({ children, ...props }) {
@@ -36,6 +35,7 @@ export function App() {
 			<NavBar>
 				<NavButton to="/" label="Home" />
 				<NavButton to="/scoreboard" label="Scoreboard" />
+				<NavButton to="/form" label="Form" />
 			</NavBar>
 
 			{/* <div className="flex flex-row items-center justify-center p-4">
@@ -48,6 +48,7 @@ export function App() {
 				<Routes>
 					<Route path="/" element={ <Default /> } />
 					<Route path="/scoreboard" element={ <Scoreboard /> } />
+					<Route path="/form" element={ <Form /> } />
 				</Routes>
 			</div>
 		</>

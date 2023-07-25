@@ -57,8 +57,8 @@ export function Player({ player, data, dispatch }) {
 	const { scoreboardData } = data;
 	const { scoreboardDispatch } = dispatch;
 
-	const [ isExpanded, setIsExpanded ] = useState(false);
-	const toggleExpand = () => setIsExpanded(!isExpanded);
+	// const [ isExpanded, setIsExpanded ] = useState(false);
+	// const toggleExpand = () => setIsExpanded(!isExpanded);
 
 	const incColor = "green";
 	const decColor = "red";

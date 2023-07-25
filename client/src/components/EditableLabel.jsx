@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 export const EditableLabel = ({ initialValue, onBlur, onChange, ...props }) => {
-	const { inputClassName, labelClassName } = props;
+	const { inputClassName, labelClassName, ...rest } = props;
 	const [ isEditing, setIsEditing ] = useState(false);
 	const [ tempValue, setTempValue ] = useState(initialValue);
 
@@ -33,13 +33,13 @@ export const EditableLabel = ({ initialValue, onBlur, onChange, ...props }) => {
 					onBlur(tempValue);
 				} }
 				onKeyDown={ handleKeyDown }
-				{ ...props }
+				{ ...rest }
 				className={ inputClassName ?? props.className }
 			/>
 		) : (
 			<h2
 				onDoubleClick={ () => setIsEditing(true) }
-				{ ...props }
+				{ ...rest }
 				className={ labelClassName ?? props.className }
 			>
 				{ initialValue }

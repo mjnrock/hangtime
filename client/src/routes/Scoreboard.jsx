@@ -1,4 +1,4 @@
-import { useNode } from "../@node/react/useNode.js";
+import Chord from "@lespantsfancy/chord";
 import { Core as AppScoreboard, Nodes } from "../apps/scoreboard/main.js";
 
 import { Team } from "../apps/scoreboard/components/Team.jsx";
@@ -6,7 +6,7 @@ import { Team } from "../apps/scoreboard/components/Team.jsx";
 import { BsPeople } from "react-icons/bs";
 
 export function Scoreboard() {
-	const { state: scoreboardData, dispatch: scoreboardDispatch } = useNode(Nodes.Scoreboard);
+	const { state: scoreboardData, dispatch: scoreboardDispatch } = Chord.Node.React.useNode(Nodes.Scoreboard);
 
 	return (
 		<div className="p-4 m-2 border rounded border-neutral-200">

@@ -1,4 +1,4 @@
-import { Node as NodeClass } from "../../@node/Node";
+import Chord from "@lespantsfancy/chord";
 import Core from "./lib/package";
 
 export { Core };
@@ -45,19 +45,13 @@ export const Reducers = {
 			return state;
 		}
 
-		console.log(player, nextPlayer, team)
-
 		const teamIndex = state.teams.findIndex((t) => t.id === team.id);
 		if(teamIndex === -1) {
 			return state;
 		}
 
-		console.log(player, nextPlayer, team, teamIndex)
-
 		const newTeams = [ ...state.teams ];
 		newTeams[ teamIndex ] = Core.Reducers.Team.replacePlayer(team, { oldPlayer: player, newPlayer: nextPlayer });
-
-		console.log(player, nextPlayer, team, teamIndex, newTeams)
 
 		return {
 			...state,
@@ -66,7 +60,7 @@ export const Reducers = {
 	},
 };
 
-export const Nodes = NodeClass.CreateMany({
+export const Nodes = Chord.Node.Node.CreateMany({
 	Scoreboard: {
 		state: Core.State.Scoreboard({}),
 		reducers: Reducers,
