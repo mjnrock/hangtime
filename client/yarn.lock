@@ -1635,11 +1635,12 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@lespantsfancy/chord@x":
-  version "0.1.25"
-  resolved "https://registry.yarnpkg.com/@lespantsfancy/chord/-/chord-0.1.25.tgz#8ef95e3ea71c7f9ce3f9d7fa6f7b08e2f786162d"
-  integrity sha512-9E4hf4eSq6QRWWGNSzjEUCd1kz8iZWtKus3SX9VJYUAFTkHltGjIgc6OwEMYLTWlh9r2v6YzUlato4xC9WqX3Q==
+"@lespantsfancy/chord@^0.1.27":
+  version "0.1.27"
+  resolved "https://registry.yarnpkg.com/@lespantsfancy/chord/-/chord-0.1.27.tgz#2df2d8bcd58d95510295be8edcc4705d88da62fe"
+  integrity sha512-fYVJ0dAOj3ulkp8LQstWH/jsqpF+JKyypCC8McscyOW3doRmNwJbDvGQ5IFiwlz5HJ/3MeyHpKooyW0EpFEByQ==
   dependencies:
+    is-base64 "^1.1.0"
     uuid "^9.0.0"
 
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
@@ -5207,6 +5208,11 @@ is-arrayish@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/is-arrayish/-/is-arrayish-0.2.1.tgz#77c99840527aa8ecb1a8ba697b80645a7a926a9d"
   integrity sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg==
+
+is-base64@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/is-base64/-/is-base64-1.1.0.tgz#8ce1d719895030a457c59a7dcaf39b66d99d56b4"
+  integrity sha512-Nlhg7Z2dVC4/PTvIFkgVVNvPHSO2eR/Yd0XzhGiXCXEvWnptXlXa/clQ8aePPiMuxEGcWfzWbGw2Fe3d+Y3v1g==
 
 is-bigint@^1.0.1:
   version "1.0.4"

@@ -1,4 +1,5 @@
 import Chord from "@lespantsfancy/chord";
+
 import Core from "./lib/package";
 
 export { Core };
@@ -38,7 +39,7 @@ export const Reducers = {
 		if(!player) {
 			return state;
 		}
-		
+
 		const nextPlayer = Core.Reducers.Player.setName(player, { name });
 		const team = Core.Lookup.Scoreboard.teamByPlayer(state, playerId);
 		if(!team) {
